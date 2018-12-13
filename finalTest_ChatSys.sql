@@ -38,7 +38,6 @@ FOREIGN KEY unprocessedMessageSend(sendid) REFERENCES userTable(userid) ON UPDAT
    FOREIGN KEY unprocessedMessageReceive(receiveid) REFERENCES userTable(userid)
 );
 #好友表
-DROP TABLE friendInfo 
 CREATE TABLE friendInfo(
 userid VARCHAR(15) PRIMARY KEY,	#用户id
 friendid VARCHAR(15),	#好友id
@@ -47,4 +46,13 @@ friendgroup VARCHAR(10), #好友所在分组
 FOREIGN KEY friendInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
    FOREIGN KEY friendInfoFriend(friendid) REFERENCES userTable(userid)
+)
+#未处理请求表
+CREATE TABLE unprocessedRequest(
+tarid VARCHAR(15) PRIMARY KEY,
+reqid VARCHAR(15),
+msg VARCHAR(50),	#验证消息
+FOREIGN KEY unprocessedRequesttar(tarid) REFERENCES userTable(userid) ON UPDATE CASCADE
+   ON DELETE RESTRICT,
+   FOREIGN KEY unprocessedRequestreq(reqid) REFERENCES userTable(userid)
 )
