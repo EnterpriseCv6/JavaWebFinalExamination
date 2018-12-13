@@ -51,6 +51,7 @@ FOREIGN KEY friendInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
 CREATE TABLE unprocessedRequest(
 tarid VARCHAR(15) PRIMARY KEY,
 reqid VARCHAR(15),
+reqname VARCHAR(10) REFERENCES userInfo(username),
 msg VARCHAR(50),	#验证消息
 FOREIGN KEY unprocessedRequesttar(tarid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
