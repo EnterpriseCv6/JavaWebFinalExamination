@@ -48,11 +48,14 @@ FOREIGN KEY friendInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
    FOREIGN KEY friendInfoFriend(friendid) REFERENCES userTable(userid)
 )
 #未处理请求表
+DROP TABLE unprocessedRequest
 CREATE TABLE unprocessedRequest(
 tarid VARCHAR(15) PRIMARY KEY,
 reqid VARCHAR(15),
 reqname VARCHAR(10) REFERENCES userInfo(username),
 msg VARCHAR(50),	#验证消息
+reqgroup VARCHAR(10),	#请求方的好友分组，同意后要用
+reqstatus INT,	#请求的状态，0为未处理，1为同意，2为拒绝
 FOREIGN KEY unprocessedRequesttar(tarid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
    FOREIGN KEY unprocessedRequestreq(reqid) REFERENCES userTable(userid)
