@@ -1,17 +1,18 @@
 package finaltest_chatsys.chatsys.vo;
 //消息类
 public class Info {
-    //消息种类
-    private String infoType;
     //消息时间
     private String time;
     //消息内容
     private String infoContent;
     //对象用户id
     private String id;
+    //好友分组
+    private String group=new String("");
     //各种set方法
-    public void setInfoType(String infoType) {
-        this.infoType = infoType;
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public void setInfoContent(String infoContent) {
