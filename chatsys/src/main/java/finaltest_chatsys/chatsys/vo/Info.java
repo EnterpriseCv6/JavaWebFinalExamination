@@ -26,4 +26,20 @@ public class Info {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getInfoContent() {
+        return infoContent;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getGroup() {
+        return group;
+    }
 }
