@@ -2,20 +2,13 @@ package finaltest_chatsys.chatsys.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.sun.deploy.net.BasicHttpRequest;
-import com.sun.deploy.net.HttpRequest;
 import finaltest_chatsys.chatsys.dao.MyConfigurator;
-import finaltest_chatsys.chatsys.vo.Info;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.server.ServletServerHttpRequest;
+import finaltest_chatsys.chatsys.entity.Info;
+import finaltest_chatsys.chatsys.service.messageGetService;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,40 +35,57 @@ public class WebSocketEndPoint {
     //接收消息并转发调用方法
     @OnMessage
     public void onMessage(String message,Session session,@PathParam("userId")String userId){
+        //将前端传输的序列化json化为对象
         JSONObject json= JSON.parseObject(message);
+        messageGetService messageGetService=new messageGetService();
         Info info =new Info();
         info.setId(json.getString("id"));
         info.setInfoContent(json.getString("content"));
         info.setTime(json.getString("time"));
         String type=json.getString("type");
+        //用于消息传输到对象客户端的json
         JSONObject json1=new JSONObject();
+        //如果为聊天消息
         if(type.equals("1")){
+            //查看对象好友是否在线
+            //如果在线
             if(webSocketMap.containsKey(info.getId())){
+                //获取好友的session
                 Session session1=webSocketMap.get(info.getId());
+                //查看用户当前的聊天对象
                 if(userIdMap.containsKey(info.getId()))
                 {
+                    //如果用户当前聊天对象为该好友
                     if(userIdMap.get(info.getId()).equals(userId)){
+                        //将消息存储到聊天记录的数据库中
+                        //将消息发送给好友的客户端
+                        messageGetService.insertToLog(info,userId);
                         info.setId(userId);
                         json1.put("msg",info);
                         json1.put("type","1");
                         sendMsg(session1,json1);
-                        //缺少插入数据库
                     }
+                    //如果不为该好友
                     else{
+                        //将消息存入未处理消息表
+                        //给好友客户端发送提示
+                        messageGetService.insertToUnprocessed(info,userId);
                         info.setId(userId);
                         info.setInfoContent("");
                         json1.put("msg",info);
                         json1.put("type","2");
                         sendMsg(session1,json1);
-                        //缺少插入数据库
                     }
                 }else{
-                    //缺少插入数据库
+                    //如果好友不在线则将消息存入未处理消息表
+                    messageGetService.insertToLog(info,userId);
                 }
 
             }
         }
-        else if(type.equals("4")){
+        //如果为用户当前聊天对象的id
+        else if(type.equals("5")){
+            //将对象的id加入图中
             userIdMap.put(userId,info.getId());
         }
     }

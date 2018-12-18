@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="finaltest_chatsys.chatsys.dao.messageInfoMapper">
+    <resultMap id="chatInfoMap" type="finaltest_chatsys.chatsys.entity.Info">
+        <result property="infoContent" column="message"/>
+        <result property="time" column="stime"/>
+        <result property="id" column="receiveid"/>
+    </resultMap>
+    <!--将消息插入未处理消息表-->
+    <insert id="insertToUnprocessed" parameterType="finaltest_chatsys.chatsys.entity.Info">
+        insert into unprocessedMessage(sendid,receiveid,stime,message) values(#{userId},#{id},#{time},#{infoContent});
+    </insert>
+    <!--将消息插入聊天记录-->
+    <insert id="insertToLog" parameterType="finaltest_chatsys.chatsys.entity.Info">
+        insert into chatInfo(sendid,receiveid,chattime,message) values(#{userId},#{id},#{time},#{infoContent});
+    </insert>
+    <!--获取未处理的聊天记录-->
+    <select id="select" parameterType="finaltest_chatsys.chatsys.entity.Info" resultMap="chatInfoMap">
+        select receiveid,stime,message from unprocessedMessage where receiveid=#{userId} and sendid=#{tarId};
+    </select>
+    <!--删除未处理聊天记录-->
+    <delete id="delete" parameterType="String">
+        delete from unprocessedMessage where receiveid=#{userId} and sendid=#{tarId};
+    </delete>
+</mapper>
