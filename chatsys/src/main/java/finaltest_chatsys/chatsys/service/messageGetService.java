@@ -21,6 +21,7 @@ public class messageGetService implements messageGetIService {
 
     @Override
     public void insertToLog(Info info,String userId) {
+        System.out.println(info.getId()+" "+info.getInfoContent()+" "+info.getTime()+" "+userId);
         messageInfoMapper.insertToLog(info,userId);
     }
 
