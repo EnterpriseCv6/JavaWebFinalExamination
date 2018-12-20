@@ -63,8 +63,6 @@ public class WebSocketEndPoint {
             Session session1=webSocketMap.get(info.getId());
             if(session1!=null){
                 //获取好友的session
-                System.out.println(userId+"发送了1"+info.getInfoContent());
-
                 //查看用户当前的聊天对象
                 if(userIdMap.containsKey(info.getId()))
                 {
@@ -90,7 +88,6 @@ public class WebSocketEndPoint {
                         sendMsg(session1,json1);
                     }
                 }}else{
-                    System.out.println(userId+"发送了2"+info.getInfoContent());
                     //如果好友不在线则将消息存入未处理消息表
                     messageGetService.insertToUnprocessed(info,userId);
                     System.out.println("插入完成！");

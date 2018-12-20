@@ -1,5 +1,6 @@
 CREATE DATABASE chatSys;
 USE chatSys;
+#设置了序号自增的表，在插入会自增的值时请将插入值设置为0，他会自动按照当前的最大序号自增1
 #用户表
 CREATE TABLE userTable(
 userid VARCHAR(15) PRIMARY KEY,
@@ -18,9 +19,9 @@ FOREIGN KEY userInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT
 );
 #聊天信息
-
 CREATE TABLE chatInfo(
-sendid VARCHAR(15) PRIMARY KEY,	#发送人id
+msgId INT AUTO_INCREMENT PRIMARY KEY, #消息的序号
+sendid VARCHAR(15),	#发送人id
 receiveid VARCHAR(15),	#接收人id
 chattime VARCHAR(30),	#聊天时间
 message VARCHAR(100),	#消息
@@ -28,10 +29,10 @@ FOREIGN KEY chatInfoSend(sendid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
    FOREIGN KEY chatInfoReceive(receiveid) REFERENCES userTable(userid)
 );
-
 #未处理的消息（当接收方未上线时暂存于此，上线后获取值并删除）
 CREATE TABLE unprocessedMessage(
-sendid VARCHAR(15) PRIMARY KEY,
+messageId INT AUTO_INCREMENT PRIMARY KEY,	#消息的序号
+sendid VARCHAR(15),
 receiveid VARCHAR(15),
 stime VARCHAR(30),
 message VARCHAR(100),
@@ -49,11 +50,11 @@ FOREIGN KEY friendInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
    FOREIGN KEY friendInfoFriend(friendid) REFERENCES userTable(userid)
 )
-
 #未处理请求表
 CREATE TABLE unprocessedRequest(
-tarid VARCHAR(15) PRIMARY KEY,
-reqid VARCHAR(15),
+friendMessageId INT AUTO_INCREMENT PRIMARY KEY, #消息的序号
+tarid VARCHAR(15), #目标id
+reqid VARCHAR(15), #请求人id
 rtime VARCHAR(30), #发送的时间
 reqname VARCHAR(10) REFERENCES userInfo(username),
 msg VARCHAR(50),	#验证消息
