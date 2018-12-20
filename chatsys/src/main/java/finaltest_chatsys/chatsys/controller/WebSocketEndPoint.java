@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import finaltest_chatsys.chatsys.entity.Info;
 import finaltest_chatsys.chatsys.service.messageGetService;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 
@@ -13,6 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -21,6 +23,11 @@ public class WebSocketEndPoint {
     private static int onlineCount=0;    //在线人数
     private static Map<String,Session> webSocketMap=new HashMap<String,Session>();
     private static Map<String,String> userIdMap=new HashMap<String,String>();
+    private static ApplicationContext applicationContext=null;
+
+    public static void serApplicationContext(ApplicationContext Context){
+        applicationContext=Context;
+    }
     //建立连接调用方法
     @OnOpen
     public void onOpen(Session session,@PathParam("userId") String userId)
@@ -41,11 +48,10 @@ public class WebSocketEndPoint {
         //将前端传输的序列化json化为对象
         JSONObject json= JSON.parseObject(message);
         System.out.println(message);
-        messageGetService messageGetService=new messageGetService();
+        messageGetService messageGetService=applicationContext.getBean(messageGetService.class);
         Info info =new Info();
         info.setId(json.getString("id"));
         info.setInfoContent(json.getString("content"));
-        System.out.println(userId+"发送了"+info.getInfoContent());
         info.setTime(json.getString("time"));
         String type=json.getString("type");
         //用于消息传输到对象客户端的json
@@ -54,9 +60,11 @@ public class WebSocketEndPoint {
         if(type.equals("1")){
             //查看对象好友是否在线
             //如果在线
-            if(webSocketMap.containsKey(info.getId())){
+            Session session1=webSocketMap.get(info.getId());
+            if(session1!=null){
                 //获取好友的session
-                Session session1=webSocketMap.get(info.getId());
+                System.out.println(userId+"发送了1"+info.getInfoContent());
+
                 //查看用户当前的聊天对象
                 if(userIdMap.containsKey(info.getId()))
                 {
@@ -81,12 +89,18 @@ public class WebSocketEndPoint {
                         json1.put("type","2");
                         sendMsg(session1,json1);
                     }
-                }else{
+                }}else{
+                    System.out.println(userId+"发送了2"+info.getInfoContent());
                     //如果好友不在线则将消息存入未处理消息表
-                    messageGetService.insertToLog(info,userId);
+                    messageGetService.insertToUnprocessed(info,userId);
+                    System.out.println("插入完成！");
+                    List<Info> rs=messageGetService.select(info.getId(),userId);
+                    for(Info info1:rs){
+                        System.out.println(info1.getInfoContent());
+                    }
                 }
 
-            }
+
         }
         //如果为用户当前聊天对象的id
         else if(type.equals("5")){
