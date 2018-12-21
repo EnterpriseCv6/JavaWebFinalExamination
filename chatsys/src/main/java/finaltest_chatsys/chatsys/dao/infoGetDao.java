@@ -1,6 +1,6 @@
 package finaltest_chatsys.chatsys.dao;
 
-import finaltest_chatsys.chatsys.vo.Info;
+import finaltest_chatsys.chatsys.entity.Info;
 import java.util.List;
 //消息获取Dao
 public interface infoGetDao {
