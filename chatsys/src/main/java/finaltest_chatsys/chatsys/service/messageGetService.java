@@ -2,6 +2,7 @@ package finaltest_chatsys.chatsys.service;
 
 import finaltest_chatsys.chatsys.dao.messageInfoMapper;
 import finaltest_chatsys.chatsys.entity.Info;
+import finaltest_chatsys.chatsys.entity.chatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -37,5 +38,10 @@ public class messageGetService implements messageGetIService {
     @Override
     public void delete(String userId,String tarId) {
         messageInfoMapper.delete(userId,tarId);
+    }
+
+    @Override
+    public List<chatMessage> selectChatMessage(String userId, String tarId) {
+        return messageInfoMapper.selectChatMessage(userId,tarId);
     }
 }

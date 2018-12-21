@@ -1,5 +1,6 @@
 package finaltest_chatsys.chatsys;
 
+import finaltest_chatsys.chatsys.controller.DownloadServlet;
 import finaltest_chatsys.chatsys.controller.WebSocketEndPoint;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -7,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,6 +33,17 @@ public class ChatsysApplication {
         ConfigurableApplicationContext applicationContext=SpringApplication.run(ChatsysApplication.class, args);
         WebSocketEndPoint.serApplicationContext(applicationContext);
     }
+
+    @Bean
+    public ServletRegistrationBean getServletRegistrationBean(){
+        ServletRegistrationBean bean = new ServletRegistrationBean(new DownloadServlet());
+
+        bean.addUrlMappings("/download");
+
+        return bean;
+
+    }
+
 
 
 }

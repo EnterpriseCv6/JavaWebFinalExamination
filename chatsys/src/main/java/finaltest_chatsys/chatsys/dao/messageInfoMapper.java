@@ -1,6 +1,7 @@
 package finaltest_chatsys.chatsys.dao;
 
 import finaltest_chatsys.chatsys.entity.Info;
+import finaltest_chatsys.chatsys.entity.chatMessage;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -24,4 +25,12 @@ public interface messageInfoMapper {
     //将消息从未处理消息表中删除
     @Delete("delete from unprocessedMessage where receiveid=#{userId} and sendid=#{tarId};")
     void delete(@Param("userId") String userId,@Param("tarId") String tarId);
+    //获取聊天记录
+    @Select("select sendid,chattime,message from chatInfo where( (sendid=#{userId} and receiveid=#{tarId}) or (sendid=#{tarId} and receiveid=#{userId}));")
+    @Results(value = {
+            @Result(property = "sendId",column = "sendid"),
+            @Result(property = "time",column = "chattime"),
+            @Result(property = "message",column = "message")
+    })
+    List<chatMessage> selectChatMessage(@Param("userId") String userId,@Param("tarId") String tarId);
 }
