@@ -2,8 +2,11 @@ package finaltest_chatsys.chatsys.service;
 
 import finaltest_chatsys.chatsys.dao.messageInfoMapper;
 import finaltest_chatsys.chatsys.entity.Info;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
+
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
 @ComponentScan({"finaltest_chatsys.chatsys.dao.messageInfoMapper"})
 @Service("messageGetService")
 public class messageGetService implements messageGetIService {
+
     @Resource
     private messageInfoMapper messageInfoMapper;
 

@@ -1,14 +1,27 @@
 package finaltest_chatsys.chatsys.dao;
 
 import finaltest_chatsys.chatsys.entity.Info;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface messageInfoMapper {
-    public void insertToUnprocessed(Info info,String userId);
-    public void insertToLog(Info info,String userId);
-    public List<Info> select(String userId,String tarId);
-    public void delete(String userId,String tarId);
+    //将消息插入到未处理信息表中
+    @Insert("insert into unprocessedMessage(messageId,sendid,receiveid,stime,message) values(0,#{userId},#{info.id},#{info.time},#{info.infoContent});")
+    void insertToUnprocessed(@Param("info") Info info,@Param("userId") String userId);
+    //将消息插入到聊天记录表中
+    @Insert("insert into chatInfo(msgId,sendid,receiveid,chattime,message) values(0,#{userId},#{info.id},#{info.time},#{info.infoContent});")
+    void insertToLog(@Param("info") Info info,@Param("userId") String userId);
+    //获取未处理的消息
+    @Select("select receiveid,stime,message from unprocessedMessage where receiveid=#{userId} and sendid=#{tarId};")
+    @Results({
+            @Result(property="infoContent",column="message"),
+            @Result(property="time",column="stime"),
+            @Result(property="id",column="receiveid")
+    })
+    List<Info> select(@Param("userId") String userId,@Param("tarId") String tarId);
+    //将消息从未处理消息表中删除
+    @Delete("delete from unprocessedMessage where receiveid=#{userId} and sendid=#{tarId};")
+    void delete(@Param("userId") String userId,@Param("tarId") String tarId);
 }
