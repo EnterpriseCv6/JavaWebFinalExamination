@@ -46,9 +46,9 @@ friendgroup VARCHAR(10), #好友所在分组
 FOREIGN KEY friendInfo(userid) REFERENCES userTable(userid) ON UPDATE CASCADE
    ON DELETE RESTRICT,
    FOREIGN KEY friendInfoFriend(friendid) REFERENCES userTable(userid)
-)
+);
 #未处理请求表
-DROP TABLE unprocessedRequest
+DROP TABLE unprocessedRequest;
 CREATE TABLE unprocessedRequest(
 tarid VARCHAR(15) PRIMARY KEY,
 reqid VARCHAR(15),
