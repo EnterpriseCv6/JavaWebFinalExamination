@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML4.01//EN"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+<link rel="stylesheet" type="text/css" href="css/css1.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script> 
+  
+  </script>
+<meta charset="UTF-8">
+<script type="text/javascript" src="js/js1.js"></script>
+
+<script>
+window.onload = function(){
+ var list = document.getElementById('list');
+ var ah2 = list.getElementsByTagName('p');
+ var uls = list.getElementsByTagName('ul');
+ // h2要和下面的ul进行匹配，所以我们要用索引值，给h2身上添加索引值
+ for(var i=0;i<ah2.length;i++){
+  ah2[i].index = i;//给h2添加索引值，点击谁就给谁添加索引值
+  ah2[i].onclick = function(){
+   if(this.className == ''){//判断所点击的h2标签是否有类，
+    //this.index指h2身上的索引数，this指h2，h2的索引值为this.index
+    uls[this.index].style.display = 'block';
+    this.className = 'active';//给当前点击的h2添加类，更改箭头方向
+   }else{
+    uls[this.index].style.display = 'none';
+    this.className = '';
+   }
+   
+  }
+  }
+  var lis=document.getElementsByTagName('li');
+for(i=0;i<lis.length;i++){
+lis[i].onmouseover=function(){
+tips.innerHTML="个性签名:<br>"+this.innerText;
+tips.style.display="block";
+tips.style.left=(this.offsetLeft+70)+"px";
+tips.style.top=(this.offsetTop+this.offsetHeight+42)+"px";
+
+}
+lis[i].onmouseout=function(){
+tips.style.display="none";
+}
+}
+  }
+
+</script>
+
+</head>
+<body>
+<div id=tips style="display:none;POSITION:absolute;
+border:1px solid #ddd;background-color:#eee;width:186px;height:50px;background-image:url(images/five.jpg) 
+class="img-rounded" alt="Cinque Terre "height="20px" width="20px""></div>
+<div class="all">
+    <div class="chat_index" >
+    <!--banner-->
+    <div class="chat_banner"></div>
+    <div class="chat_body">
+     <!--在线列表-->
+      <div class="chat_online">
+      <!--搜索-->
+       <div class="search_online">
+       <form>
+       <input type="text" placeholder="搜索/添加">
+	   <button class="btn btn-default btn-xs"><img src="images/find.png" class="img-rounded"height="15px" width="15px"></button>
+       	   <button class="btn btn-default btn-xs"><img src="images/plus.png" class="img-rounded" height="15px" width="15px"></button>
+       
+	   </form>
+	   
+       </div>
+
+<ul id="list" class="list-group" >
+  <p>我的好友</p>
+  <ul>
+  <li class="list-group-item" ><img src="images/six.jpg" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小明</li>
+    <li class="list-group-item" ><img src="images/one.png" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小红 <span class="badge">1</span></li>
+  </ul>
+  <p >企业好友</p>
+  <ul>
+   <li class="list-group-item" ><img src="images/six.jpg" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小明</li>
+    <li class="list-group-item" ><img src="images/one.png" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小红 <span class="badge">1</span></li>
+  </ul>
+  <p>黑名单</p>
+  <ul>
+   <li class="list-group-item" ><img src="images/six.jpg" class="img-circle" alt="Cinque Terre "height="40px" width="40px">虞</li>
+    <li class="list-group-item" ><img src="images/one.png" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小红 <span class="badge">1 </span></li>
+  </ul>
+   <p >企业好友</p>
+  <ul>
+   <li class="list-group-item" ><img src="images/six.jpg" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小明</li>
+    <li class="list-group-item" ><img src="images/one.png" class="img-circle" alt="Cinque Terre "height="40px" width="40px">小红 <span class="badge">1</span></li>
+  </ul>
+</ul>
+      </div>
+        <!--聊天界面-->
+        <div class="chat_main">
+         <div class="chat_div">
+          <ul id="chat_ul" class="chat_content">
+          </ul>
+         </div>
+         <div class="send_message">
+          <form>
+           <input type="text" placeholder="请输入消息" id="send_txt" style="width:410px">
+           <input type="button" value="发送" id="send_btn" onclick="send()">
+		<button class="btn btn-default btn-xs"><img src="images/find.png" class="img-rounded" alt="Cinque Terre "height="20px" width="20px">历史搜索</button>
+          </form>
+         </div>
+       </div>
+        <!--名片-->
+      <div class="chat_card">
+	<p class="pull-right">  
+	<form class="form-inline" role="form">
+  <div class="form-group">
+    <label class="sr-only" for="name">搜索</label>
+    <input type="text" class="form-control" id="name" placeholder="请输入名称">
+  </div>
+ 
+  <button class="btn btn-default btn-xs"><img src="images/xiazai.png" class="img-rounded" alt="Cinque Terre "height="20px" width="20px">下载</button>
+</form>
+     </p>
+        </div>
+    </div>
+    </div>
+  </div>
+
+</body>
+</html>
