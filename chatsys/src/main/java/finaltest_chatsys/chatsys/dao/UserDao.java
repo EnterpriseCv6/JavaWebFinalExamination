@@ -19,4 +19,8 @@ public interface UserDao extends JpaRepository<User, Long>
     @Query(value = "insert into userTable values(?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", nativeQuery = true)
     public void addUser(String userid, String upassword, String username, String usersign, Date ctime, Date birth, String address, int userstatus);
 
+    // 修改密码
+    @Modifying
+    @Query(value = "update userTable set upassword = ?1 where userid = ?2", nativeQuery = true)
+    public void updatePassword(String newPassword, String userid);
 }
