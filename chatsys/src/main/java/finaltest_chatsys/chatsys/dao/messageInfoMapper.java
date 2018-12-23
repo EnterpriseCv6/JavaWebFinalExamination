@@ -33,4 +33,5 @@ public interface messageInfoMapper {
             @Result(property = "message",column = "message")
     })
     List<chatMessage> selectChatMessage(@Param("userId") String userId,@Param("tarId") String tarId);
+
 }
