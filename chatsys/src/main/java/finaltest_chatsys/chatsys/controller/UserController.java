@@ -2,8 +2,8 @@ package finaltest_chatsys.chatsys.controller;
 
 
 import finaltest_chatsys.chatsys.entity.User;
-import finaltest_chatsys.chatsys.service.AddUserService;
 import finaltest_chatsys.chatsys.service.UserService;
+import finaltest_chatsys.chatsys.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import java.sql.Date;
 public class UserController
 {
     @Autowired
-    private AddUserService service;
+    private UserServiceImpl service;
 
 
     // 增加用户
@@ -37,5 +37,12 @@ public class UserController
         {
             return "联系人已经存在!";
         }
+    }
+
+    // 修改密码
+    @PostMapping(value = "updatepassword")
+    public void updatePassword(String newPassword, String userid)
+    {
+        service.updatePassword(newPassword, userid);
     }
 }
