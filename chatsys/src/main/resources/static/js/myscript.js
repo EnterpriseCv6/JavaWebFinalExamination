@@ -5,7 +5,7 @@ var viewmodel = avalon.define({
     datalist: {},
     text: "请求数据",
 
-    request: function () {
+    getMessage: function () {
         var id=JSON.stringify({
             userId:'3',
             tarId:'2'
@@ -21,5 +21,20 @@ var viewmodel = avalon.define({
                 setMessageInnerHTML(info.msg[0].infoContent);
             }
         });
+    }
+    getFriendList:function () {
+        var uid={
+            userId:'3'
+        };
+        $.ajax({
+            type:'post',
+            url:'getFriendList/',
+            data:uid,
+            dataType:"json",
+            contentType:"application/json;charset=utf-8",
+            success:function (data) {
+                var list=data;
+            }
+        })
     }
 });
