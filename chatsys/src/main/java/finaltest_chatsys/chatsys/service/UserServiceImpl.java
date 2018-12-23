@@ -11,7 +11,7 @@ import java.sql.Date;
 // 实现用户添加功能
 @Service
 @Transactional
-public class AddUserService implements UserService
+public class UserServiceImpl implements UserService
 {
 
     @Autowired
@@ -21,5 +21,11 @@ public class AddUserService implements UserService
     public void addUser(String userid, String upassword, String username, String usersign, Date ctime, Date birth, String address, int userstatus)
     {
         userDao.addUser(userid, upassword, username, usersign, ctime, birth, address, userstatus);
+    }
+
+    @Override
+    public void updatePassword(String newPassword, String userid)
+    {
+        userDao.updatePassword(newPassword, userid);
     }
 }
