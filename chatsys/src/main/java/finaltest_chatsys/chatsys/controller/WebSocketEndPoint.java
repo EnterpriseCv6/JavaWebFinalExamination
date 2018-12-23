@@ -13,6 +13,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +105,10 @@ public class WebSocketEndPoint {
             //将对象的id加入图中
             userIdMap.put(userId,info.getId());
         }
+        else if(type.equals("6")){
+            //心跳检测，用于保持连接
+        }
+
     }
     @OnError
     public void onError(Session session, Throwable error) {

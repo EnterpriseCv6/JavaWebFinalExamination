@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML4.01//EN"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
@@ -7,14 +7,29 @@
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <script> 
-  
+
   </script>
 <meta charset="UTF-8">
 <script type="text/javascript" src="js/js1.js"></script>
 
 <script>
 window.onload = function(){
- var list = document.getElementById('list');
+ var userId=sessionStorage.getItem('userId');
+ var group;
+ var j=0;
+ var firendList=JSON.parse(ajax(userId));
+ var list=document.getElementById('list')
+ for(var Fcount=0;Fcount!=friendList.length();Fcount++){
+   var num=isExist(group,firendList,Fcount);
+   if(group==null||num==-1){
+      group[j]=firendList[Fcount].group;
+      j++;
+      list.innerHTML+="<p id='p"+j+"'>"+friendList[Fcount].group+"</p>";
+   }
+
+
+ }
+
  var ah2 = list.getElementsByTagName('p');
  var uls = list.getElementsByTagName('ul');
  // h2要和下面的ul进行匹配，所以我们要用索引值，给h2身上添加索引值
@@ -125,6 +140,39 @@ class="img-rounded" alt="Cinque Terre "height="20px" width="20px""></div>
     </div>
     </div>
   </div>
+<script>
+  var websocket = null;
+  var uid=sessionStorage.getItem("userId");
+  //判断当前浏览器是否支持WebSocket
+  if('WebSocket' in window){
 
+    websocket = new WebSocket("ws://localhost:8080/WebSocket/"+uid);
+
+  }
+  else{
+    alert('Not support websocket')
+  }
+
+  //连接发生错误的回调方法
+  websocket.onerror = function(){
+    alert("噢！与服务器的链接似乎出了点问题，请刷新重试。")
+  };
+
+  //连接成功建立的回调方法
+  websocket.onopen = function(event){
+
+  }
+
+  //接收到消息的回调方法
+  websocket.onmessage = function(event){
+
+  }
+
+  //连接关闭的回调方法
+  websocket.onclose = function(){
+
+  }
+  setInterval("heart()","30000");
+</script>
 </body>
 </html>

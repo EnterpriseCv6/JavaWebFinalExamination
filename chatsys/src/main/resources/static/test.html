@@ -1,23 +1,36 @@
 <!DOCTYPE HTML>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
 <head>
     <title>WebSocket</title>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
 </head>
 
-<body>
+<body ms-controller="viewmodel">
 Welcome<br/>
 本id:<input id="uId" type="text" value="3"><br/>
 对id:<input id="toId" type="text"><br/>
 <input id="text" type="text" /><button onclick="send()">Send</button>    <button onclick="closeWebSocket()">Close</button>
 <br />
-<a href="http://localhost:8080/download?userId=2&tarId=3" target="_blank">下载</a>
+<a href="http://localhost:8080/download?userId=2&tarId=3" target="_blank">下载</a><br/>
+<button id="getButton"ms-click="@request">获取</button>
 <div id="message">
 </div>
+
 </body>
+<script>
+
+
+    function heart() {
+        var json={conent:"",type:6,id:"",time:""};
+        websocket.send(JSON.stringify(json));
+    }
+</script>
 
 <script type="text/javascript">
     var websocket = null;
     var uid=document.getElementById('uId').value;
+    sessionStorage.setItem("userId",uid);
     //判断当前浏览器是否支持WebSocket
     if('WebSocket' in window){
 
@@ -76,5 +89,8 @@ Welcome<br/>
         setMessageInnerHTML(message);
         websocket.send(JSON.stringify(json));
     }
+    setInterval("heart()","30000");
 </script>
+<script th:src="@{/js/avalon.js}"></script>
+<script th:src="@{/js/myscript.js}"></script>
 </html>

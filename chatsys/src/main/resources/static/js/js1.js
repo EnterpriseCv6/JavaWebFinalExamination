@@ -11,7 +11,7 @@ function send() {
         if (send_txt.value == '') {
             alert("请不要惜字如金");
         } else {
-            chat_ul.innerHTML += '<li><img src="C:/Users/Administrator/Desktop/six.jpg"><span>' + send_txt.value + '</span></li>';
+            chat_ul.innerHTML += '<li><img src="images/six.jpg"><span>' + send_txt.value + '</span></li>';
             now++;
             if (num==0) {
                 chat_span[now].className = 'spanleft';
@@ -26,6 +26,7 @@ function send() {
             send_txt.value = '';
             // 内容过多时,将滚动条放置到最底端
             /*contentcontent.scrollTop = content.scrollHeight;*/
+            sendMsg(send_txt);
         }
 		}
 }
@@ -49,3 +50,57 @@ oDiv1.onmouseover = function() {
 oDiv2.style.display = "block";
 }
 };
+function ajax(userId) {
+    var xmlHttp=false;
+    var info;
+    if(window.XMLHttpRequest){
+        xmlHttp=new XMLHttpRequest();
+    }else if(window.ActiveXObject){
+        try{
+            xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+        }catch(e){
+            try{
+                xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+            }catch (e) {
+                window.alert("该浏览器不支持AJAX");
+
+            }
+        }
+    }
+    var method="POST";
+    var url=window.location.host+"/friendInfoRequest/"+userId;
+    xmlHttp.open(method,url,true);
+    xmlHttp.onreadystatechange=function () {
+        if(xmlHttp.readyState==4)
+            info=xmlHttp.responseText;
+    }
+    xmlHttp.send();
+    if(info!=null)
+        return info;
+}
+function isExist (group,friendList,Fcount) {
+    var isExist=-1;
+    for(var i=0;i!=group.length();i++){
+        if(group[i]==friendList[Fcount].group)
+        {
+            isExist=i;
+            break;
+        }
+    }
+    return isExist;
+}
+function sendMsg(message){
+    var id=sessionStorage.getItem('chatId');
+    var json={id:id,content:message,time:new Date().toLocaleString(),type:'1'};
+    websocket.send(JSON.stringify(json));
+}
+function heart() {
+    var json={conent:"",type:6,id:"",time:""};
+    websocket.send(JSON.stringify(json));
+}
+function closeWebSocket(){
+    websocket.close();
+}
+function setMessageInnerHTML(message){
+
+}

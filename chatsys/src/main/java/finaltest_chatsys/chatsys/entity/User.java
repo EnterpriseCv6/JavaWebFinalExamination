@@ -1,116 +1,74 @@
 package finaltest_chatsys.chatsys.entity;
-
-import javax.persistence.*;
-import java.sql.Date;
-
-// 用户vo
-@Entity
-@Table(name = "userTable")  // 与userTable表结构对应
-public class User
-{
-    @Id
-    @Column(name = "userid")
-    private String userid;
-
-    @Column(name = "upassword")
-    private String upassword;
-
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "usersign")
-    private String usersign;
-
-    @Column(name = "ctime")
-    private Date ctime;
-
-    @Column(name = "birth")
-    private Date birth;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "userstatus")
-    private int userstatus;
-
-    public String getUserid()
-    {
-        return userid;
+//用户类
+public class User {
+    //用户id
+    private String userId;
+    //用户名
+    private String userName;
+    //用户签名
+    private String sign;
+    //好友评论
+    private String comment;
+    //账号注册时间
+    private String cTime;
+    //用户生日
+    private String bitrh;
+    //用户地址
+    private String adderss;
+    //set()与get()方法
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid)
-    {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getUpassword()
-    {
-        return upassword;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUpassword(String upassword)
-    {
-        this.upassword = upassword;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getUsername()
-    {
-        return username;
+    public String getSign() {
+        return sign;
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
-    public String getUsersign()
-    {
-        return usersign;
+    public String getComment() {
+        return comment;
     }
 
-    public void setUsersign(String usersign)
-    {
-        this.usersign = usersign;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public Date getCtime()
-    {
-        return ctime;
+    public String getcTime() {
+        return cTime;
     }
 
-    public void setCtime(Date ctime)
-    {
-        this.ctime = ctime;
+    public void setcTime(String cTime) {
+        this.cTime = cTime;
     }
 
-    public Date getBirth()
-    {
-        return birth;
+    public String getBitrh() {
+        return bitrh;
     }
 
-    public void setBirth(Date birth)
-    {
-        this.birth = birth;
+    public void setBitrh(String bitrh) {
+        this.bitrh = bitrh;
     }
 
-    public String getAddress()
-    {
-        return address;
+    public String getAdderss() {
+        return adderss;
     }
 
-    public void setAddress(String address)
-    {
-        this.address = address;
+    public void setAdderss(String adderss) {
+        this.adderss = adderss;
     }
-
-    public int getUserstatus()
-    {
-        return userstatus;
-    }
-
-    public void setUserstatus(int userstatus)
-    {
-        this.userstatus = userstatus;
-    }
-
 }
