@@ -42,12 +42,12 @@ var viewmodel = avalon.define({
 //动态生成好友列表
 function createList(list) {
     var group=new Object();
-    var isE=0;
+    var isE=-1;
     var j=0;
     var sul=document.getElementById('friendList');
     for(var i=0;i!=list.msg.length;i++){
         isE=isExist(group,list.msg[i].friendGroup);
-        if(isE==0){
+        if(isE===-1){
             group[j]=list.msg[i].friendGroup;
             var li=document.createElement('li');
             var a1=document.createElement('a');
@@ -70,10 +70,9 @@ function createList(list) {
             var a=document.createElement('a');
             //生成好友列表的超链接
             a.setAttribute('href','#');
+            a.setAttribute('class','func');
+            sessionStorage.setItem(list.msg[i].friendName,list.msg[i].friendid);
             a.innerHTML=list.msg[i].friendName;
-            a.setAttribute('onclick',function () {
-                
-            });
             //生成该好友列并加入对应无序列表
             li1.setAttribute('id','li2'+list.msg[i].friendName);
             li1.setAttribute('class','list');
@@ -85,12 +84,12 @@ function createList(list) {
 }
 //判断当前已有分组中是否存在该分组名
 function isExist(group,name) {
-    var i=0;
+    var i=-1;
     if(group==null)
-        i=0;
+        i=-1;
     else{
         for(var j=0;j<group.length;j++){
-            if(group[j]==name)
+            if(group[j]===name)
             {
                 i=j;
             }
@@ -112,7 +111,20 @@ $(function () {
     $("body").on('click','.active',function () {
         $(this).removeClass("active");
     })
-})
+})/*
 $(function () {
+    $("body").on('click','.func',function () {
+        var name=$(this).innerHTML;
+        var id=sessionStorage.getItem(name);
+        alert(id+" "+name);
+        sendMsg("",'5',id);
+    })
+})*/
+$(function () {
+    $(".menu").on('click','.func',{foo:"文本:"},function () {
+        var name=$(this).html();
+        var id=sessionStorage.getItem(name);
+        sendMsg("",'5',id);
+    })
 
 })
