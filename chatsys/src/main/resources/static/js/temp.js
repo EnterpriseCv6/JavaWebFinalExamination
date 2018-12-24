@@ -2,6 +2,7 @@ var viewmodel = avalon.define({
     //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
     $id: "viewmodel",
     datalist: {},
+    datalist1:{},
     text: "搜索好友",
     text1:"发送申请",
     text2:"查看请求",
@@ -63,7 +64,8 @@ var viewmodel = avalon.define({
             dataType : 'json',
             contentType: "application/json;charset=utf-8",
             success : function(user) {
-                viewmodel.datalist=user;
+                viewmodel.datalist1=user;
+                viewmodel.text2="查看成功";
             },
             error : function(result) {
                 viewmodel.text2="查看失败";

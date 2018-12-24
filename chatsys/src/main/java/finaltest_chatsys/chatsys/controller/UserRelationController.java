@@ -5,7 +5,6 @@ import finaltest_chatsys.chatsys.entity.Friend;
 import finaltest_chatsys.chatsys.entity.User;
 import finaltest_chatsys.chatsys.entity.UserRelation;
 import finaltest_chatsys.chatsys.service.UserRelationService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +27,11 @@ public class UserRelationController {
     List<User> searchFriend(@RequestBody JSONObject params){
         String searchid=params.getString("friendid");
         List<User> user=userRelationService.searchFriend(searchid);
+        for(User str :user){
+            System.out.println(str.getAddress());
+            System.out.println(str.getBirth());
+            System.out.println(str.getUsername());
+        }
         return user;
     }
     @RequestMapping(value="/sendRequest",method= RequestMethod.POST)
@@ -126,15 +130,5 @@ public class UserRelationController {
         String friendid=params.getString("friendid");
         List<UserRelation>list=userRelationService.checkRequest(userid,friendid);
         return list;
-    }
-    @RequestMapping(value = "/getFriendList",method = RequestMethod.POST)
-    @ResponseBody
-    String getFriendList(@RequestBody JSONObject param){
-        System.out.println("jinu");
-        String userId= param.getString("userId");
-        List<Friend> list=userRelationService.getFriendList(userId);
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("msg",list);
-        return jsonObject.toJSONString();
     }
 }
