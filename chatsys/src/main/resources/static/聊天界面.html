@@ -26,11 +26,10 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
       <div class="chat_online" style="background-color:#324252">
       <!--搜索-->
        <div class="search_online">
-      
        <input type="text" placeholder="搜索/添加" id="putin">
-	  <a  href="#popup"><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
-  <a  href="#popu"><img src="images/plus.png"   class="img-circle" height="24px" width="24px"></a>
-  
+	  <a  href="#popup" ><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
+  <a  href="#popu" ms-click="@request"><img src="images/plus.png"   class="img-circle" height="24px" width="24px"></a>
+
 	
 </div>
 	  
@@ -175,11 +174,12 @@ function send() {
         <img src="images/photo-1515224526905-51c7d77c7bb8.jpg" alt="">
       </div>
       <div class="popup__text">
+
         <h1>Lorem ipsum dolor sit amet</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p>
-      
+        <p ms-for="el in @datalist" id="searchid">{{el.userid}}</p>
                 <button type="button" class="button" data-dismiss="modal">取消</button>
-                <button type="button" class="button">添加</button>
+                <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
 	  </div>
       <a class="popup__close" href="#">X</a>
     </div>
@@ -249,7 +249,8 @@ function send() {
     //接收到消息的回调方法
     websocket.onmessage = function(event){
         var obj=JSON.parse(event.data);
-
+        var message=obj.get("message");
+        var type=obj.get("type");
       //  setMessageInnerHTML(obj.msg.id);
      //   setMessageInnerHTML(obj.msg.infoContent);
     }
@@ -284,4 +285,6 @@ function send() {
 </script>
 <script th:src="@{/js/avalon.js}"></script>
 <script th:src="@{/js/myscript.js}"></script>
+<script th:src="@{/js/UserRelation.js}"></script>
+<script th:src="@{js/jquery-2.1.1.min.js}"></script>
 </html>

@@ -99,6 +99,16 @@ public class WebSocketEndPoint {
 
 
         }
+        else if(type.equals("3")){
+            Session session1=webSocketMap.get(info.getId());
+            if(session1!=null){
+                JSONObject jsonObject=new JSONObject();
+                info.setId(userId);
+                jsonObject.put("message",info);
+                jsonObject.put("type",type);
+                sendMsg(session1,jsonObject);
+            }
+        }
         //如果为用户当前聊天对象的id
         else if(type.equals("5")){
             //将对象的id加入图中

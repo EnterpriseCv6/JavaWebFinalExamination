@@ -3,41 +3,67 @@ var viewmodel = avalon.define({
     //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
     $id: "viewmodel",
     datalist: {},
-    text: "请求数据",
+    text: "发送申请",
 
-    getMessage: function () {
-        var id=JSON.stringify({
-            userId:'3',
-            tarId:'2'
-        });
-        $.ajax({
-            type: "post",
-            url: '/getMessage/',    //向springboot请求数据的url
-            data: id,
-            dataType:"json",
-            contentType: "application/json;charset=utf-8",
-            success: function (data) {
-                var info=data;
-                setMessageInnerHTML(info.msg[0].infoContent);
-            }
-        });
-    }
- /*   getFriendList:function () {
-        var uid={
-            userId:'3'
-        };
-        $.ajax({
-            type:'post',
-            url:'getFriendList/',
-            data:uid,
-            dataType:"json",
-            contentType:"application/json;charset=utf-8",
-            success:function (data) {
-                var list=data;
-                createList(list)
-            }
+    request:function () {
+        var friendid=document.getElementById("putin").value;
+        var findUser = JSON.stringify({
+            friendid:friendid
         })
-    }*/
+        $.ajax({
+            type : 'POST',
+            url : '/searchFriend',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(user) {
+                viewmodel.datalist=user;
+            },
+            error : function(user) {
+                viewmodel.text="搜索失败";
+            }
+        });
+    },
+    sendRequest:function () {
+        var friendid=document.getElementById("putin").value;
+        var userid="12345";
+        var msg="你好啊";
+        var findUser = JSON.stringify({
+            friendid:friendid,
+            userid:userid,
+            msg:msg
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/sendRequest',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(result) {
+                viewmodel.text="发送成功";
+                sendMsg(msg,3,friendid);
+            },
+            error : function(result) {
+                viewmodel.text="发送失败";
+            }
+        });
+    },
+    /*   getFriendList:function () {
+           var uid={
+               userId:'3'
+           };
+           $.ajax({
+               type:'post',
+               url:'getFriendList/',
+               data:uid,
+               dataType:"json",
+               contentType:"application/json;charset=utf-8",
+               success:function (data) {
+                   var list=data;
+                   createList(list)
+               }
+           })
+       }*/
 });
 //动态生成好友列表
 function createList(list) {
@@ -95,7 +121,6 @@ function isExist(group,name,m) {
             }
         }
     }
-    alert(i);
     return i;
 }
 //发送当前聊天对象的id到后端

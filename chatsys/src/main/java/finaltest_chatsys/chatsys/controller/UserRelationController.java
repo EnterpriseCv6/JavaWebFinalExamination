@@ -139,5 +139,6 @@ public class UserRelationController {
         List<Friend> list=userRelationService.getFriendList(userId);
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("msg",list);
-        return jsonObject.toJSONString();}
+        return jsonObject.toJSONString();
+    }
 }

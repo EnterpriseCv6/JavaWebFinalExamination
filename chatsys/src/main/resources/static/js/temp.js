@@ -1,4 +1,4 @@
-var viewmodel = avalon.define({
+/*var viewmodel = avalon.define({
     //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
     $id: "viewmodel",
     datalist: {},
@@ -93,4 +93,4 @@ var viewmodel = avalon.define({
             }
         });
     }
-});
+});*/

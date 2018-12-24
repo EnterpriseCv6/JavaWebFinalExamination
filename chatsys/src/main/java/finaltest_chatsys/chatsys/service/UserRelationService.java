@@ -43,5 +43,4 @@ public class UserRelationService {
     public List<Friend> getFriendList(String userId){
         return userRelationMapper.getFriendList(userId);
     }
-
 }
