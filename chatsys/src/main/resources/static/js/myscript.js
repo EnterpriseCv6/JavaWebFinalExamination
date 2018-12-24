@@ -46,7 +46,7 @@ function createList(list) {
     var j=0;
     var sul=document.getElementById('friendList');
     for(var i=0;i!=list.msg.length;i++){
-        isE=isExist(group,list.msg[i].friendGroup);
+        isE=isExist(group,list.msg[i].friendGroup,j);
         if(isE===-1){
             group[j]=list.msg[i].friendGroup;
             var li=document.createElement('li');
@@ -83,18 +83,19 @@ function createList(list) {
     }
 }
 //判断当前已有分组中是否存在该分组名
-function isExist(group,name) {
+function isExist(group,name,m) {
     var i=-1;
-    if(group==null)
+
+    if(m==0)
         i=-1;
-    else{
-        for(var j=0;j<group.length;j++){
-            if(group[j]===name)
-            {
-                i=j;
+    else {
+        for (var j = 0; j < m; j++) {
+            if (group[j] == name) {
+                i = j;
             }
         }
     }
+    alert(i);
     return i;
 }
 //发送当前聊天对象的id到后端

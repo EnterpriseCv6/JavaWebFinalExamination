@@ -40,5 +40,8 @@ public class UserRelationService {
     public int refuseRequest(String tarid,String reqid){
         return userRelationMapper.refuseRequest(tarid,reqid);
     }
+    public List<Friend> getFriendList(String userId){
+        return userRelationMapper.getFriendList(userId);
+    }
 
 }

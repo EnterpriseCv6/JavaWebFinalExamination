@@ -57,4 +57,12 @@ public interface UserRelationMapper {
             @Result(property="reqname",column="reqname")
     })
     List<UserRelation> checkRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
+    @Select("select friendid,friendName,friendGroup from friendInfo where userId=#{userId}")
+    @Results(value = {
+            @Result(property = "friendid",column = "friendid"),
+            @Result(property = "friendName",column = "friendName"),
+            @Result(property = "friendGroup",column = "friendGroup")
+    }
+    )
+    List<Friend> getFriendList(String userId);
 }

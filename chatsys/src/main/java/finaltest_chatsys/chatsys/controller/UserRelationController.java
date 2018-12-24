@@ -131,4 +131,13 @@ public class UserRelationController {
         List<UserRelation>list=userRelationService.checkRequest(userid,friendid);
         return list;
     }
+    @RequestMapping(value = "/getFriendList",method = RequestMethod.POST)
+    @ResponseBody
+    String getFriendList(@RequestBody JSONObject param){
+        System.out.println("jinu");
+        String userId= param.getString("userId");
+        List<Friend> list=userRelationService.getFriendList(userId);
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("msg",list);
+        return jsonObject.toJSONString();}
 }
