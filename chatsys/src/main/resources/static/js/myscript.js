@@ -27,7 +27,7 @@ var viewmodel = avalon.define({
     sendRequest:function () {
         var friendid=document.getElementById("putin").value;
         var userid="12345";
-        var msg="你好啊";
+        var msg=document.getElementById("requestmessage").value;
         var findUser = JSON.stringify({
             friendid:friendid,
             userid:userid,
@@ -40,11 +40,11 @@ var viewmodel = avalon.define({
             dataType : 'json',
             contentType: "application/json;charset=utf-8",
             success : function(result) {
-                viewmodel.text="发送成功";
+                viewmodel.text=result.result;
                 sendMsg(msg,3,friendid);
             },
             error : function(result) {
-                viewmodel.text="发送失败";
+                viewmodel.text=result.result;
             }
         });
     },

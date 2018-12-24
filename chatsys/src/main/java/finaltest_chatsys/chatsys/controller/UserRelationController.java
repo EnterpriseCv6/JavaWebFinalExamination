@@ -54,10 +54,10 @@ public class UserRelationController {
         UserRelation userRelation1=userRelationService.judgeRelation(userid);
         Map<String,Object> result = new HashMap<String,Object>();
         if(userRelation1!=null)
-            result.put("result","申请失败");
+            result.put("result","申请失败,该用户已是您的好友！");
         else{//查询彼此是否为好友
             userRelationService.insertToUnprocessed(userRelation);
-            result.put("result","申请成功");
+            result.put("result","申请成功！");
         }
 
         return result;

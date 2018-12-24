@@ -27,7 +27,7 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
       <!--搜索-->
        <div class="search_online">
        <input type="text" placeholder="搜索/添加" id="putin">
-	  <a  href="#popup" ><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
+	  <a  href="#popup" ms-click="@request"><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
   <a  href="#popu" ms-click="@request"><img src="images/plus.png"   class="img-circle" height="24px" width="24px"></a>
 
 	
@@ -175,10 +175,25 @@ function send() {
       </div>
       <div class="popup__text">
 
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p>
-        <p ms-for="el in @datalist" id="searchid">{{el.userid}}</p>
-                <button type="button" class="button" data-dismiss="modal">取消</button>
+          <div style="font-size:20px;color:black">
+              <table class="table">
+                  <tbody>
+                  <tr ms-for="el in @datalist">
+                      <td>Id</td>
+                      <td>{{el.userid}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Name</td>
+                      <td>{{el.username}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Sign</td>
+                      <td>{{el.usersign}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+          <input type="text" class="form-control" placeholder="输入验证消息" id="requestmessage">
                 <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
 	  </div>
       <a class="popup__close" href="#">X</a>
@@ -190,7 +205,32 @@ function send() {
         <img src="images/six.jpg" alt="">
       </div>
       <div class="popup__text">
-       
+          <div style="font-size:20px;color:black">
+              <table class="table">
+                  <tbody>
+                  <tr ms-for="el in @datalist">
+                      <td>Id</td>
+                      <td>{{el.userid}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Name</td>
+                      <td>{{el.username}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Birth</td>
+                      <td>{{el.birth}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Sign</td>
+                      <td>{{el.usersign}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Address</td>
+                      <td>{{el.address}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
                 <button type="button" class="button" >发送消息</button>
 				<button type="button" class="button" >查看好友信息</button>
                 <button type="button" class="button">删除好友</button>
