@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.Table;
 import java.sql.Date;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserServiceImplTest
 {
     private final Logger logger =
@@ -33,5 +34,23 @@ public class UserServiceImplTest
     public void updatePassword()
     {
         service.updatePassword("654321", "javaweb");
+    }
+
+    @Test
+    public void findFriends()
+    {
+        service.findFriends("test");
+    }
+
+    @Test
+    public void findUnpMessage()
+    {
+        service.findUnpMesssage("test");
+    }
+
+    @Test
+    public void countUnpRequest()
+    {
+        service.countUnpRequest("test");
     }
 }
