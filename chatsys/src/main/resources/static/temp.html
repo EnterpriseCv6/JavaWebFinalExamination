@@ -1,0 +1,62 @@
+!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body ms-controller="viewmodel">
+<h1 th:text="${temp}">Hello World</h1>
+本机id：<input type="text" id="userid"></br>
+搜索id:<input type="text" id="friendid"></br>
+验证消息:<input type="text" id="msg"></br>
+<button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@request">{{@text}}</button></br>
+<button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@sendRequest">{{@text1}}</button></br>
+<button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@checkRequest">{{@text2}}</button></br>
+<button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@agreeRequest">{{@text3}}</button></br>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td class="active">userId</td>
+        <td class="success">userName</td>
+        <td class="active">sign</td>
+        <td class="active">cTime</td>
+        <td class="active">birth</td>
+        <td class="active">address</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ms-for="el in @datalist">
+        <td >{{el.userId}}</td>
+        <td >{{el.userName}}</td>
+        <td >{{el.sign}}</td>
+        <td >{{el.cTime}}</td>
+        <td >{{el.bitrh}}</td>
+        <td >{{el.adderss}}</td>
+    </tr>
+    </tbody>
+</table>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td class="active">申请名：</td>
+        <td class="active">申请人：</td>
+        <td class="success">申请时间：</td>
+        <td class="active">验证消息：</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ms-for="el in @datalist">
+        <td >{{el.reqname}}</td>
+        <td >{{el.reqid}}</td>
+        <td >{{el.rtime}}</td>
+        <td >{{el.msg}}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script th:src="@{js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{js/avalon.js}"></script>
+<script th:src="@{js/bootstrap.min.js}"></script>
+<script th:src="@{js/temp.js}"></script>
+</html>

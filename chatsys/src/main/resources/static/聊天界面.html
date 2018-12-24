@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
+=======
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML4.01//EN"http://www.w3.org/TR/html4/strict.dtd">
+>>>>>>> parent of 58f8ade... 获取未处理聊天消息
 <html>
 <head>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<<<<<<< HEAD
 <meta charset="utf-8">
 <title>iChat</title>
 <style>
@@ -17,6 +22,33 @@
 @media screen and (max-width: 768px) {
   html, body {
     font-size: 12px;
+=======
+  <script> 
+  
+  </script>
+<meta charset="UTF-8">
+<script type="text/javascript" src="js/js1.js"></script>
+
+<script>
+window.onload = function(){
+ var list = document.getElementById('list');
+ var ah2 = list.getElementsByTagName('p');
+ var uls = list.getElementsByTagName('ul');
+ // h2要和下面的ul进行匹配，所以我们要用索引值，给h2身上添加索引值
+ for(var i=0;i<ah2.length;i++){
+  ah2[i].index = i;//给h2添加索引值，点击谁就给谁添加索引值
+  ah2[i].onclick = function(){
+   if(this.className == ''){//判断所点击的h2标签是否有类，
+    //this.index指h2身上的索引数，this指h2，h2的索引值为this.index
+    uls[this.index].style.display = 'block';
+    this.className = 'active';//给当前点击的h2添加类，更改箭头方向
+   }else{
+    uls[this.index].style.display = 'none';
+    this.className = '';
+   }
+   
+  }
+>>>>>>> parent of 58f8ade... 获取未处理聊天消息
   }
 }
 .button {
@@ -500,6 +532,7 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
     </div>
     </div>
   </div>
+<<<<<<< HEAD
   
 <script>
 
@@ -599,5 +632,8 @@ function send() {
       <a class="popup__close" href="#">X</a>
     </div>
 </div>
+=======
+
+>>>>>>> parent of 58f8ade... 获取未处理聊天消息
 </body>
 </html>
