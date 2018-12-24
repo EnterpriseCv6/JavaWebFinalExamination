@@ -18,4 +18,10 @@ public class controller {
         return "聊天界面";
     }
 
+    @RequestMapping("/login")
+    public String login()
+    {
+        return "登陆";
+    }
+
 }

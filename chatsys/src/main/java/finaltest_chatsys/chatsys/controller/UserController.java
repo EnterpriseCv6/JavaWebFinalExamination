@@ -7,13 +7,16 @@ import finaltest_chatsys.chatsys.entity.UnprocessedRequest;
 import finaltest_chatsys.chatsys.entity.User;
 import finaltest_chatsys.chatsys.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
+
 @RequestMapping(value = "user")
 public class UserController
 {
@@ -24,20 +27,22 @@ public class UserController
     // 增加用户
     // 对应表单id
     @PostMapping(value = "add")
-    public String addUser(@RequestParam("") String userid, @RequestParam("") String upassword,
-                          @RequestParam("") String username, @RequestParam("") String usersign,
-                          @RequestParam("") Date birth, String address)
+    public String addUser(@RequestParam("signId") String userid, @RequestParam("signPW") String upassword,
+                          @RequestParam("signName") String username,
+                          @RequestParam("signBirth") Date birth)
     {
         try
         {
+            String address="";
+            String usersign="";
             long time = System.currentTimeMillis();
             Date date = new Date(time);
             service.addUser(userid, upassword, username, usersign, date, birth, address, 1);
-            return "";
+            return "聊天界面";
         }
         catch (Exception e)
         {
-            return "联系人已经存在!";
+            return "联系人已经存在！";
         }
     }
 

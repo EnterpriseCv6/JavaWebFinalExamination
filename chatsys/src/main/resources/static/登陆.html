@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>登录</title>
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
@@ -46,21 +46,26 @@
           <input type="password" placeholder="密码" />
           <button class="btn_login" onClick="cambiar_login()">LOGIN</button>
         </div>
+
+      <form action="/user/add" method="post">
         <div class="cont_form_sign_up"> <a href="#" onClick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
           <h2>SIGN UP</h2>
-          <input type="text" placeholder="账号" />
-		  <input type="text" placeholder="用户名" />
-          <input type="password" placeholder="密码" />
-          <input type="password" placeholder="确认密码" />
-		   <input type="text" placeholder="出生年月（格式XXXX-XX-XX）" />
-          <button class="btn_sign_up" onClick="cambiar_sign_up()">SIGN UP</button>
+          <input type="text" placeholder="账号" id="signId" name="signId" />
+		  <input type="text" placeholder="用户名" id="signName" name="signName" />
+          <input type="password" placeholder="密码" id="signPW1" name="signPW" />
+          <input type="password" placeholder="确认密码" id="signPW2" />
+          <input type="text" placeholder="出生日期（格式XXXX-XX-XX）" id="signBirth" name="signBirth" />
+          <button class="btn_sign_up" onclick="return sign()">SIGN UP</button>
+          <script src="/js/myscript.js"></script>
         </div>
+      </form>
+
       </div>
     </div>
   </div>
 </div>
 
-<script src="js/index.js"></script>
+<script src="/js/index.js"></script>
 
 </body>
 </html>

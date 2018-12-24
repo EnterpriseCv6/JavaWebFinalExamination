@@ -3,67 +3,41 @@ var viewmodel = avalon.define({
     //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
     $id: "viewmodel",
     datalist: {},
-    text: "发送申请",
+    text: "请求数据",
 
-    request:function () {
-        var friendid=document.getElementById("putin").value;
-        var findUser = JSON.stringify({
-            friendid:friendid
-        })
+    getMessage: function () {
+        var id=JSON.stringify({
+            userId:'3',
+            tarId:'2'
+        });
         $.ajax({
-            type : 'POST',
-            url : '/searchFriend',
-            data : findUser,
-            dataType : 'json',
+            type: "post",
+            url: '/getMessage/',    //向springboot请求数据的url
+            data: id,
+            dataType:"json",
             contentType: "application/json;charset=utf-8",
-            success : function(user) {
-                viewmodel.datalist=user;
-            },
-            error : function(user) {
-                viewmodel.text="搜索失败";
+            success: function (data) {
+                var info=data;
+                setMessageInnerHTML(info.msg[0].infoContent);
             }
         });
-    },
-    sendRequest:function () {
-        var friendid=document.getElementById("putin").value;
-        var userid="12345";
-        var msg=document.getElementById("requestmessage").value;
-        var findUser = JSON.stringify({
-            friendid:friendid,
-            userid:userid,
-            msg:msg
-        })
+    }
+ /*   getFriendList:function () {
+        var uid={
+            userId:'3'
+        };
         $.ajax({
-            type : 'POST',
-            url : '/sendRequest',
-            data : findUser,
-            dataType : 'json',
-            contentType: "application/json;charset=utf-8",
-            success : function(result) {
-                viewmodel.text=result.result;
-                sendMsg(msg,3,friendid);
-            },
-            error : function(result) {
-                viewmodel.text=result.result;
+            type:'post',
+            url:'getFriendList/',
+            data:uid,
+            dataType:"json",
+            contentType:"application/json;charset=utf-8",
+            success:function (data) {
+                var list=data;
+                createList(list)
             }
-        });
-    },
-    /*   getFriendList:function () {
-           var uid={
-               userId:'3'
-           };
-           $.ajax({
-               type:'post',
-               url:'getFriendList/',
-               data:uid,
-               dataType:"json",
-               contentType:"application/json;charset=utf-8",
-               success:function (data) {
-                   var list=data;
-                   createList(list)
-               }
-           })
-       }*/
+        })
+    }*/
 });
 //动态生成好友列表
 function createList(list) {
@@ -121,6 +95,7 @@ function isExist(group,name,m) {
             }
         }
     }
+    alert(i);
     return i;
 }
 //发送当前聊天对象的id到后端
@@ -154,3 +129,69 @@ $(function () {
     })
 
 })
+
+// 注册表单
+function sign() {
+    var id = document.getElementById("signId").value;      // 获取表单账号
+    var name = document.getElementById("signName").value;  // 获取表单用户名
+    var pw1 = document.getElementById("signPW1").value;    // 获取表单密码
+    var pw2 = document.getElementById("signPW2").value;    // 获取表单确认密码
+    var birth = document.getElementById("signBirth").value;// 获取表单生日
+
+    var idf = 0;     // 记录账号是否有非字母和数字
+    for (var i = 0; i <= id.length; i++)
+    {
+        if ((id.charAt(i) >= 'a' && id.charAt(i) <= 'z')
+            || (id.charAt(i) >= 'A' && id.charAt(i) <= 'Z')
+            || (id.charAt(i) >= '0' && id.charAt(i) <= '9'))
+        {
+            idf = 1;   // 账号合法
+            break;
+        }
+
+    }
+    var birth = new Date(birth);
+
+    var birthf = 1;   // 记录生日格式是否正确
+    if (id.length > 15)
+    {
+        alert("账号不得超过15个字符"); return false;
+    }
+
+    else if (id.length == 0)
+    {
+        alert("账号不得为空！"); return false;
+    }
+    else if (idf == 0)
+    {
+        alert("账号只允许输入字母和数字！"); return false;
+    }
+    else if (name.length >= 10)
+    {
+        alert("用户名不得超过10个字符！"); return false;
+    }
+    else if (pw1.length < 6)
+    {
+        alert("密码不得小于6个字符！"); return false;
+    }
+    else if (pw1.length >= 20)
+    {
+        alert("密码不得大于20个字符！"); return false;
+    }
+    else if (pw1 != pw2)
+    {
+        alert("两次输入的密码不相等！"); return false;
+    }
+    else if (birth == "Invalid Date")
+    {
+        alert("请正确输入出生日期（XXXX-XX-XX）"); return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+
+
+
