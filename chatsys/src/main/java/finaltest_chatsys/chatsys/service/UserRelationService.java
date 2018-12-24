@@ -28,6 +28,9 @@ public class UserRelationService {
     public List<UserRelation> getFriendgroup(String userid, String friendid){
         return userRelationMapper.getFriendgroup(userid,friendid);
     }
+    public List<UserRelation> checkRequest(String userid, String friendid){
+        return userRelationMapper.checkRequest(userid,friendid);
+    }
     public int addFriend(String userid, Friend friend){
         return userRelationMapper.addFriend(userid,friend);
     }
@@ -37,10 +40,5 @@ public class UserRelationService {
     public int refuseRequest(String tarid,String reqid){
         return userRelationMapper.refuseRequest(tarid,reqid);
     }
-    public List<UserRelation> checkRequest(String userid, String friendid){
-        return userRelationMapper.checkRequest(userid,friendid);
-    }
-    public List<Friend> getFriendList(String userId){
-        return userRelationMapper.getFriendList(userId);
-    }
+
 }

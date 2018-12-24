@@ -11,12 +11,12 @@ public interface UserRelationMapper {
 
     @Select("select * from userTable where userid=#{userid}")
     @Results(value = {
-            @Result(property="userId",column="userid"),
-            @Result(property="userName",column="username"),
-            @Result(property="sign",column="usersign"),
-            @Result(property="cTime",column="ctime"),
-            @Result(property="bitrh",column="birth"),
-            @Result(property="adderss",column="address")
+            @Result(property="userid",column="userid"),
+            @Result(property="username",column="username"),
+            @Result(property="usersign",column="usersign"),
+            @Result(property="ctime",column="ctime"),
+            @Result(property="birth",column="birth"),
+            @Result(property="address",column="address")
     })
     List<User> searchfriend(@Param("userid")String userid);
     @Insert("insert into unprocessedRequest(tarid,reqid,rtime,msg,reqstatus) values(#{userRelation.tarid},#{userRelation.reqid},#{userRelation.rtime},#{userRelation.msg},0);")
@@ -25,8 +25,8 @@ public interface UserRelationMapper {
     @Results({
             @Result(property="reqid",column="friendid")
     })
-    UserRelation judgeRelation(@Param("userid") String userId);
-    @Select("select * from unprocessedRequest where tarid=#{tarid} and reqid=#{reqid}")
+    UserRelation judgeRelation(@Param("userid") String userid);
+    @Select("select * from unprocessedRequest where tarid=#{tarid} and reqid=#{reqid}  and reqstatus='0'")
     @Results(value = {
             @Result(property="friendMessageId",column="friendMessageId"),
             @Result(property="tarid",column="tarid"),
@@ -49,7 +49,7 @@ public interface UserRelationMapper {
     int agreeRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
     @Update("update unprocessedRequest set reqstatus='2' where tarid=#{tarid} and reqid=#{reqid}")
     int refuseRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
-    @Select("select reqid,rtime,reqname,msg from unprocessedRequest where tarid=#{tarid} and reqid=#{reqid}")
+    @Select("select reqid,rtime,reqname,msg from unprocessedRequest where tarid=#{tarid} and reqid=#{reqid} and reqstatus='0'")
     @Results(value = {
             @Result(property="reqid",column="reqid"),
             @Result(property="rtime",column="rtime"),
@@ -57,12 +57,4 @@ public interface UserRelationMapper {
             @Result(property="reqname",column="reqname")
     })
     List<UserRelation> checkRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
-    @Select("select friendid,friendName,friendGroup from friendInfo where userId=#{userId}")
-    @Results(value = {
-            @Result(property = "friendid",column = "friendid"),
-            @Result(property = "friendName",column = "friendName"),
-            @Result(property = "friendGroup",column = "friendGroup")
-    }
-    )
-    List<Friend> getFriendList(String userId);
 }
