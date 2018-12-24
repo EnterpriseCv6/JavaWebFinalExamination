@@ -15,11 +15,7 @@ public class controller {
     @RequestMapping("/test")
     public String html(){
         System.out.println("跳转");
-        return "test";
+        return "聊天界面";
     }
-    @RequestMapping(value="/images",produces = MediaType.IMAGE_PNG_VALUE)
-    @ResponseBody
-    public BufferedImage images() throws Exception{
-        return ImageIO.read(new FileInputStream(new File("C://Users//胡虞勇//Pictures//赤诚.png")));
-    }
+
 }

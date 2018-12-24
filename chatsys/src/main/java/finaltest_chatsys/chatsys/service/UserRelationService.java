@@ -40,4 +40,7 @@ public class UserRelationService {
     public List<UserRelation> checkRequest(String userid, String friendid){
         return userRelationMapper.checkRequest(userid,friendid);
     }
+    public List<Friend> getFriendList(String userId){
+        return userRelationMapper.getFriendList(userId);
+    }
 }

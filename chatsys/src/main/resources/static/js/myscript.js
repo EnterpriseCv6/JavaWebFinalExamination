@@ -21,8 +21,8 @@ var viewmodel = avalon.define({
                 setMessageInnerHTML(info.msg[0].infoContent);
             }
         });
-    },
-    getFriendList:function () {
+    }
+ /*   getFriendList:function () {
         var uid={
             userId:'3'
         };
@@ -37,25 +37,53 @@ var viewmodel = avalon.define({
                 createList(list)
             }
         })
-    }
+    }*/
 });
+//动态生成好友列表
 function createList(list) {
     var group=new Object();
     var isE=0;
     var j=0;
-    var ul=document.getElementById('friendList');
-    for(var i=0;i<=list.length;i++){
-        isE=isExist(group,list.msg[i].group);
+    var sul=document.getElementById('friendList');
+    for(var i=0;i!=list.msg.length;i++){
+        isE=isExist(group,list.msg[i].friendGroup);
         if(isE==0){
-            group[j]=list.msg[i].group;
+            group[j]=list.msg[i].friendGroup;
             var li=document.createElement('li');
-            li.setAttribute('id','li1'+j);
-            li.setAttribute('value',group[j]);
+            var a1=document.createElement('a');
+            var ul1=document.createElement('ul');
+            //动态生成无序列表
+            ul1.setAttribute('class','items');
+            ul1.setAttribute('id','ul'+group[j]);
+            //自动生成分组的名字超链接
+            a1.setAttribute('href','#');
+            a1.innerHTML=group[j];
+            //将元素插入
+            li.setAttribute('id','li1'+group[j]);
+            li.setAttribute('class','list');
+            li.appendChild(a1);
+            li.appendChild(ul1);
+            sul.appendChild(li);
             j++;
         }
-        //动态添加li
+            var li1=document.createElement("li");
+            var a=document.createElement('a');
+            //生成好友列表的超链接
+            a.setAttribute('href','#');
+            a.innerHTML=list.msg[i].friendName;
+            a.setAttribute('onclick',function () {
+                
+            });
+            //生成该好友列并加入对应无序列表
+            li1.setAttribute('id','li2'+list.msg[i].friendName);
+            li1.setAttribute('class','list');
+            li1.appendChild(a);
+            var u=document.getElementById('ul'+list.msg[i].friendGroup);
+            u.appendChild(li1);
+
     }
 }
+//判断当前已有分组中是否存在该分组名
 function isExist(group,name) {
     var i=0;
     if(group==null)
@@ -65,9 +93,26 @@ function isExist(group,name) {
             if(group[j]==name)
             {
                 i=j;
-
             }
         }
     }
     return i;
 }
+//发送当前聊天对象的id到后端
+function talk(tarId) {
+    sendMsg('','5',tarId);
+
+}
+$(function () {
+    $("body").on('click','.list',function () {
+        $(this).addClass("active");
+    })
+})
+$(function () {
+    $("body").on('click','.active',function () {
+        $(this).removeClass("active");
+    })
+})
+$(function () {
+
+})

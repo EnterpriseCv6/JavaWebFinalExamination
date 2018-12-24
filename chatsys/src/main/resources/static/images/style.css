@@ -222,7 +222,7 @@ ul.menu .active .list a {
         height: 546px;
         border: 1px solid saddlebrown;
         background-color: #f1fea9;
-		background-image:url(card2.jpeg);
+		background-image:url(static/css/card2.jpeg);
 		background-repeat:no-repeat;
 		}
     .chat_content ul{
