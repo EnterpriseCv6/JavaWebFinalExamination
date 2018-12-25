@@ -214,17 +214,20 @@ function createList(list) {
             a.innerHTML=list.msg[i].friendName;
             //生成该好友列并加入对应无序列表
             li1.setAttribute('id','li2'+list.msg[i].friendName);
-            li1.setAttribute('class','list');
             li1.appendChild(a);
             var u=document.getElementById('ul'+list.msg[i].friendGroup);
             u.appendChild(li1);
 
     }
+    var s=JSON.stringify({
+        msg:group
+    })
+    sessionStorage.setItem('group',s);
+    sessionStorage.setItem('groupLength',j.toString());
 }
 //判断当前已有分组中是否存在该分组名
 function isExist(group,name,m) {
     var i=-1;
-
     if(m==0)
         i=-1;
     else {
@@ -262,13 +265,49 @@ $(function () {
 $(function () {
     $(".menu").on('click','.func',{foo:"文本:"},function () {
         var name=$(this).html();
+        var flag=0;
+        var tarId=sessionStorage.getItem('tarId');
         var id=sessionStorage.getItem(name);
-        sendMsg("",'5',id);
+        if(id==sessionStorage.getItem('tarId')){
+            flag=1;
+        }
+        if(flag==0) {
+            sessionStorage.setItem('tarId', id);
+            $('#download_a').attr('href', window.location.host + '/download?userId=' + sessionStorage.getItem('userId') + "&tarId=" + id);
+            $('#download_a').attr('target', '_blank');
+            if($('#chat_'+tarId).length>0)
+                $('#chat_'+tarId).toggle();
+            if($('#chat_'+id).length>0){
+                $('#chat_'+id).toggle();
+            }else{
+                var u=document.createElement('ul');
+                u.setAttribute('id','chat_'+id);
+                u.setAttribute('class','chat_content');
+                document.getElementById('chat-div').appendChild(u);
+            }
+            sendMsg("",'5',id);
+        }
     })
 
 })
+function sendT() {
+    var msg=document.getElementById("send_txt").value;
+    send(0,msg);
+    sendMsg(msg,'1',sessionStorage.getItem('tarId'));
+}
 
-// 注册表单
+$(function () {
+    var obj=sessionStorage.getItem('group');
+    var group=JSON.parse(obj).msg;
+    var n=sessionStorage.getItem('groupLength');
+    var s=document.getElementById('selectBox');
+    for(var i=0;i<n;i++){
+        var o=document.createElement('option');
+        o.innerHTML=group[i];
+        o.value=group[i];
+        s.appendChild(o);
+    }
+})
 function sign() {
     var id = document.getElementById("signId").value;      // 获取表单账号
     var name = document.getElementById("signName").value;  // 获取表单用户名
@@ -326,10 +365,40 @@ function sign() {
     }
     else
     {
+        sessionStorage.setItem('userId',id);
         return true;
     }
 }
+function login() {
+    var id=document.getElementById('loginId').value;
+    var pwd=document.getElementById('loginPwd').value;
+    if(id.length==0||pwd.length==0){
+        alert('账号或密码不能为空');
+    }
+    else if(id.length>15||pwd.length>15){
+        alert('账号或密码的长度不能超过15位');
+    }
+    else{
+        var data=JSON.stringify({
+            userId:id,
+            upassword:pwd
+        })
+        $.ajax({
+            type:'POST',
+            url:'/loginTest/',
+            data:data,
+            dataType:"json",
+            contentType: "application/json;charset=utf-8",
+            success:function (res) {
+                var result=res.result;
+                if(result=='true'){
+                    sessionStorage.setItem('userId',id);
+                    window.location.href=encodeURI('/test');
 
-
-
-
+                }else{
+                    alert('登陆失败!');
+                }
+            }
+        })
+    }
+}

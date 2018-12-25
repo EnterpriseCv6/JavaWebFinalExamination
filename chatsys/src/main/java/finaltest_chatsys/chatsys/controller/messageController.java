@@ -27,4 +27,21 @@ public class messageController {
         json.put("msg",chatInfo);
         return json.toJSONString();
     }
+    @RequestMapping(value = "/loginTest",method = RequestMethod.POST)
+    @ResponseBody
+    public String login(@RequestBody String jsons){
+        String result=null;
+        System.out.println(jsons);
+        JSONObject jsonObject=JSON.parseObject(jsons);
+        String userId=(String)jsonObject.get("userId");
+        String pwd=(String)jsonObject.get("upassword");
+        String res=messageGetService.login(userId,pwd);
+        if(res!=null)
+            result="true";
+        else
+            result="false";
+        JSONObject j=new JSONObject();
+        j.put("result",result);
+        return j.toJSONString();
+    }
 }

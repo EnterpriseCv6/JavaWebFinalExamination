@@ -11,4 +11,5 @@ public interface messageGetIService {
     public List<Info> select(String userId,String tarId);
     public void delete(String userId,String tarId);
     public List<chatMessage> selectChatMessage(String userId,String tarId);
+    public String login(String userId,String pwd);
 }

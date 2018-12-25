@@ -44,4 +44,9 @@ public class messageGetService implements messageGetIService {
     public List<chatMessage> selectChatMessage(String userId, String tarId) {
         return messageInfoMapper.selectChatMessage(userId,tarId);
     }
+
+    @Override
+    public String login(String userId, String pwd) {
+        return messageInfoMapper.login(userId,pwd);
+    }
 }

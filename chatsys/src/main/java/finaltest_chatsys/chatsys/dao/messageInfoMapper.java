@@ -33,4 +33,6 @@ public interface messageInfoMapper {
             @Result(property = "message",column = "message")
     })
     List<chatMessage> selectChatMessage(@Param("userId") String userId,@Param("tarId") String tarId);
+    @Select("select username from userTable where userId=#{userId} and upassword=#{pwd};")
+    String login(@Param("userId") String userId,@Param("pwd") String pwd);
 }

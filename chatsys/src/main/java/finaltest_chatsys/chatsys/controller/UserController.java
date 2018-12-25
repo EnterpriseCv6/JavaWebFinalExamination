@@ -10,19 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
 
+@Controller
 @RequestMapping(value = "user")
 public class UserController
 {
     @Autowired
     private UserServiceImpl service;
 
+    @Autowired
+    HttpServletRequest request;
+
+
+    HttpServletResponse response;
 
     // 增加用户
     // 对应表单id
@@ -33,22 +42,29 @@ public class UserController
     {
         try
         {
+            // 添加用户
             String address="";
             String usersign="";
             long time = System.currentTimeMillis();
             Date date = new Date(time);
             service.addUser(userid, upassword, username, usersign, date, birth, address, 1);
+
+            return "redirect:/test";
+            // 修改userstatus
+            service.login(userid);
             return "聊天界面";
         }
         catch (Exception e)
         {
-            return "联系人已经存在！";
+            request.removeAttribute("signError");
+            request.setAttribute("signError", "用户账号已存在，请重新注册！");
+            return "登陆";
         }
     }
 
     // 登录成功
     @PostMapping(value = "login")
-    public @ResponseBody  List<List> login(String userid)
+    public @ResponseBody List<List> login(String userid)
     {
 
         // 修改userstatus
