@@ -3,41 +3,180 @@ var viewmodel = avalon.define({
     //id必须和页面上定义的ms-controller名字相同，否则无法控制页面
     $id: "viewmodel",
     datalist: {},
-    text: "请求数据",
-
-    getMessage: function () {
-        var id=JSON.stringify({
-            userId:'3',
-            tarId:'2'
-        });
+    apply: {},
+    datalist1:{},
+    text1:"请输入您想要搜索的id！",
+    text2:"查询失败！",
+    text3:"删除好友",
+    searchFriend:function () {
+        var friendid=document.getElementById("putin").value;
+        if(friendid!=""){
+        var userid="12345";
+        var findUser = JSON.stringify({
+            friendid:friendid,
+            userid:userid,
+        })
         $.ajax({
-            type: "post",
-            url: '/getMessage/',    //向springboot请求数据的url
-            data: id,
-            dataType:"json",
+            type : 'POST',
+            url : '/searchFriend',
+            data : findUser,
+            dataType : 'json',
             contentType: "application/json;charset=utf-8",
-            success: function (data) {
-                var info=data;
-                setMessageInnerHTML(info.msg[0].infoContent);
-            }
-        });
-    }
- /*   getFriendList:function () {
-        var uid={
-            userId:'3'
-        };
-        $.ajax({
-            type:'post',
-            url:'getFriendList/',
-            data:uid,
-            dataType:"json",
-            contentType:"application/json;charset=utf-8",
-            success:function (data) {
-                var list=data;
-                createList(list)
+            success : function(user) {
+                if(user!=""){
+                viewmodel.datalist=user;
+                viewmodel.text2="查询成功！";}
+                else{
+                    viewmodel.datalist=null;
+                    viewmodel.text3="删除好友";
+                    viewmodel.text2="该用户不是您的好友";}
+            },
+            error : function(user) {
+                viewmodel.text="查询失败";
             }
         })
-    }*/
+    }
+        else{
+            viewmodel.datalist=null;
+            viewmodel.text3="删除好友";
+            viewmodel.text2="请输入您想要搜索的好友id!";}
+    },
+    deleteFriend:function () {
+        var friendid=document.getElementById("putin").value;
+            var userid="12345";
+            var findUser = JSON.stringify({
+                friendid:friendid,
+                userid:userid,
+            })
+            $.ajax({
+                type : 'POST',
+                url : '/deleteFriend',
+                data : findUser,
+                dataType : 'json',
+                contentType: "application/json;charset=utf-8",
+                success : function(result) {
+                    viewmodel.datalist=null;
+                    viewmodel.text2=null;
+                    viewmodel.text3=result.result;
+                },
+                error : function(resultr) {
+                    viewmodel.text3="删除失败";
+                }
+            })
+        },
+    searchUser:function () {
+        var friendid=document.getElementById("putin").value;
+        var findUser = JSON.stringify({
+            friendid:friendid
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/searchUser',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(user) {
+                if(user!=""){
+                    viewmodel.text1="搜索成功!";
+                viewmodel.datalist=user;
+                viewmodel.apply="发送申请";
+                }
+            },
+            error : function(user) {
+                viewmodel.text1="搜索失败";
+            }
+        })
+    },
+    sendRequest:function () {
+        var friendid=document.getElementById("putin").value;
+        var userid="12345";
+        var msg=document.getElementById("requestmessage").value;
+        var findUser = JSON.stringify({
+            friendid: friendid,
+            userid: userid,
+            msg: msg,
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/sendRequest',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(result) {
+                viewmodel.apply=result.result;
+                sendMsg(msg,3,friendid);
+            },
+            error : function(result) {
+                viewmodel.apply=result.result;
+            }
+        });
+    },
+    getRequest:function () {
+        var friendid=document.getElementById("putin").value;
+        var userid="12345";
+        var findUser = JSON.stringify({
+            friendid: friendid,
+            userid: userid
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/getRequest',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(result) {
+                viewmodel.datalist1=result;
+            },
+            error : function(result) {
+                viewmodel.text=result.result;
+            }
+        });
+    },
+    addFriend:function () {
+        var friendid=document.getElementById("putin").value;
+        var userid="12345";
+        var friendgroup=document.getElementById("friendgroup").value;
+        var findUser = JSON.stringify({
+            friendid: friendid,
+            userid: userid,
+            friendgroup:friendgroup,
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/addFriend',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(result) {
+                viewmodel.text2=result.result;
+            },
+            error : function(result) {
+                viewmodel.text2=result.result;
+            }
+        });
+    },
+    refuseRequest:function () {
+        var friendid=document.getElementById("putin").value;
+        var userid="12345";
+        var findUser = JSON.stringify({
+            friendid: friendid,
+            userid: userid,
+        })
+        $.ajax({
+            type : 'POST',
+            url : '/refuseRequest',
+            data : findUser,
+            dataType : 'json',
+            contentType: "application/json;charset=utf-8",
+            success : function(result) {
+                viewmodel.text2=result.result;
+            },
+            error : function(result) {
+                viewmodel.text2=result.result;
+            }
+        });
+    },
+
 });
 //动态生成好友列表
 function createList(list) {

@@ -8,7 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface UserRelationMapper {
-
+    @Select("select * from friendInfo where userid=#{userid} and friendid=#{friendid}")
+    @Results(value = {
+            @Result(property="friendName",column="friendName"),
+            @Result(property="friendGroup",column="friendgroup"),
+            @Result(property="friendid",column="friendid"),
+    })
+    List<Friend> searchFriend(@Param("userid")String userid,@Param("friendid")String friendid);
     @Select("select * from userTable where userid=#{userid}")
     @Results(value = {
             @Result(property="userid",column="userid"),
@@ -18,8 +24,13 @@ public interface UserRelationMapper {
             @Result(property="birth",column="birth"),
             @Result(property="address",column="address")
     })
-    List<User> searchfriend(@Param("userid")String userid);
-    @Insert("insert into unprocessedRequest(tarid,reqid,rtime,msg,reqstatus) values(#{userRelation.tarid},#{userRelation.reqid},#{userRelation.rtime},#{userRelation.msg},0);")
+    List<User> searchUser(@Param("userid")String userid);
+    @Select("select username from userTable where userid=#{userid}")
+    @Results(value = {
+            @Result(property="username",column="username"),
+    })
+    User getusername(@Param("userid")String userid);
+    @Insert("insert into unprocessedRequest(tarid,reqid,rtime,reqname,msg,reqstatus) values(#{userRelation.tarid},#{userRelation.reqid},#{userRelation.rtime},#{userRelation.reqname},#{userRelation.msg},0);")
     void insertToUnprocessed(@Param("userRelation") UserRelation userRelation);
     @Select("select friendid from friendInfo where userid=#{userid}")
     @Results({
@@ -37,7 +48,7 @@ public interface UserRelationMapper {
             @Result(property="reqname",column="reqname"),
             @Result(property="reqgroup",column="reqgroup")
     })
-    UserRelation getRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
+    List<UserRelation> getRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
     @Select("select friendgroup from unprocessedRequest where userid=#{userid} and friendid=#{friendid}")
     @Results({
             @Result(property="friendgroup",column="friendgroup")
@@ -45,6 +56,8 @@ public interface UserRelationMapper {
     List<UserRelation> getFriendgroup(@Param("userid")String userid, @Param("friendid")String friendid);
     @Insert("insert into friendInfo(userid,friendid,friendName,friendgroup) values(#{userid},#{friend.friendid},#{friend.friendName},#{friend.friendGroup}) ")
     int addFriend(@Param("userid")String userid, @Param("friend")Friend friend);
+    @Delete("delete  from friendInfo where userid=#{userid} and friendid=#{friendid}")
+    int deleteFriend(@Param("userid")String userid, @Param("friendid")String friendid);
     @Update("update unprocessedRequest set reqstatus='1' where tarid=#{tarid} and reqid=#{reqid}")
     int agreeRequest(@Param("tarid")String tarid,@Param("reqid")String reqid);
     @Update("update unprocessedRequest set reqstatus='2' where tarid=#{tarid} and reqid=#{reqid}")
