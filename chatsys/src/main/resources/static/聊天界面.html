@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<title>iChat</title>
+    <link rel="stylesheet" type="text/css" href="css/mycss.css">
+
+</head>
+<body ms-controller="viewmodel">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+ <div id=tips style="display:none;POSITION:absolute;left:53px;top:100px;
+border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-image:url(images/jiemian.png);background-size:206px 599px"></div>
+<div class="all">
+    <div class="chat_index" >
+    <!--banner-->
+	
+    <div class="chat_banner" id="banner1"></div>
+			  
+    <div class="chat_body">
+     <!--在线列表-->
+      <div class="chat_online" style="background-color:#324252">
+      <!--搜索-->
+       <div class="search_online">
+
+           <input type="text" placeholder="搜索/添加" id="putin" style="width:90px">
+<<<<<<< HEAD
+           <a  href="#popup" ms-click="@searchFriend"><img src="images/find.png" class="img-circle" height="20px" width="20px"></a>
+           <a  href="#popu" ms-click="@searchUser"><img src="images/plus.png"   class="img-circle" height="20px" width="20px"></a>
+           <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ms-click="@getRequest"><img src="images/加组.png" class="img-circle" height="15px" width="15px"></button>
+
+=======
+           <a  href="#popup"><img src="images/find.png" class="img-circle" height="20px" width="20px"></a>
+           <a  href="#popu"><img src="images/plus.png"   class="img-circle" height="20px" width="20px"></a>
+           <a  href="#popup1" ><img src="images/加组.png" class="img-circle" height="20px" width="20px" ></a>
+           <button  type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
+               <img src="images/加组.png" class="img-circle" height="15px" width="15px"></button>
+>>>>>>> 7a345365e1be60d12f8de83b24cc8befbe7a71d1
+
+           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-body">
+                           <div class="modal-footer">
+                               <div style="font-size:20px;color:black">
+                                   <table class="table" ms-for="el in @datalist1">
+                                       <tbody>
+                                       <tr>
+                                           <td>Id</td>
+                                           <td>Name</td>
+                                           <td>好友请求</td>
+                                           <td>好友分组</td>
+                                           <td></td>
+                                       </tr>
+                                       <tr>
+<<<<<<< HEAD
+                                           <td>{{el.reqid}}</td>
+                                           <td>{{el.reqname}}</td>
+                                           <td>{{el.msg}}</td>
+                                           <td><select id="friendgroup">
+                                               <option>好友</option>
+                                               <option>过客</option>
+                                               <option>家人</option>
+                                               <option>朋友</option>
+=======
+                                           <td>Mumbai</td>
+                                           <td>Bangalore</td>
+                                           <td><textarea type="textarea"cols=4 rows=3 ></textarea></td>
+                                           <td><select id="selectBox">
+
+>>>>>>> 7a345365e1be60d12f8de83b24cc8befbe7a71d1
+                                           </select></td>
+                                           <td><button type="button" class="btn btn-default" data-dismiss="modal" ms-click="@addFriend">同意</button></td>
+                                           <td><button type="button" class="btn btn-default" data-dismiss="modal" ms-click="@refuseRequest">拒绝</button></td>
+                                       </tr>
+
+                                       </tbody>
+                                   </table>
+                               </div>
+                               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+</div>
+
+	   <ul class="menu" id="friendList">
+  <!-- <li class="list"><a href="#">好友</a>
+      <ul class="items">
+         <li><a href="#"> <img src="images/six.jpg"   class="img-circle" height="35px" width="35px">李好</a></li>
+         <li><a href="#"> 王好</a></li>
+         <li><a href="#"> 于好</a></li>
+      </ul>
+   </li>
+   <li class="list"><a href="#">过客</a>
+      <ul class="items">
+         <li> <a href=javsscript:void(0) > 李过 </a></li>
+         <li> <a href="#" > 李过 </a></li>
+         <li> <a href="#" > 李过  </a></li>
+      </ul>
+   </li>`
+   <li class="list"><a href="#">家人</a>
+      <ul class="items">
+         <li> <a href="#" > 李家 </a></li>
+         <li> <a href="#" > 李家 </a></li>
+         <li> <a href="#" > 李家</a></li>
+      </ul>
+   </li>
+   <li class="list"><a href="#">朋友</a>
+      <ul class="items">
+         <li> <a href="#" > 李朋</a></li>
+         <li> <a href="#" >李朋 </a></li>
+		 <li> <a href="#" >李朋 </a></li>
+            </ul>
+         </li>  -->
+      </ul>
+      </div>
+        <!--聊天界面-->
+        <div class="chat_main">
+         <div class="chat_div" id="chat-div">
+
+         </div>
+         <div class="send_message">
+
+           <input type="text" placeholder="请输入消息" id="send_txt" style="width:410px">
+           <input type="button" value="发送" id="send_btn" onclick="sendT()">
+		<button class="btn btn-default btn-xs"><img src="images/find.png"
+		class="img-rounded" height="20px" width="20px">历史搜索</button>
+
+         </div>
+       </div>
+        <!--名片-->
+      <div class="chat_card">
+	<p class="pull-right">
+	<form class="form-inline" role="form">
+  <div class="form-group">
+    <label class="sr-only" for="name">搜索</label>
+    <input type="text" class="form-control" id="name" placeholder="请输入名称" style="width:140px">
+  </div>
+
+          <button class="form-control"><a href="#" target="_blank" id="download_a"><img src="images/xiazai.png" class="img-rounded" height="20px" width="20px">下载</a></button>
+</form>
+     </p>
+        </div>
+    </div>
+    </div>
+  </div>
+
+<script>
+
+window.onload=function(){
+var lis=document.getElementsByTagName("li");
+for(i=0;i<lis.length;i++){
+if(lis[i].className!="list")
+lis[i].onmouseover=function(){
+tips.innerHTML=this.innerText;
+tips.style.display="block";
+}
+lis[i].onmouseout=function(){
+tips.style.display="none";
+}
+}
+}
+var list = document.querySelectorAll('.list');
+function accordion(e) {
+    e.stopPropagation();
+    if (this.classList.contains('active')) {
+        this.classList.remove('active');
+    } else
+    if (this.parentElement.parentElement.classList.contains('active')) {
+        this.classList.add('active');
+    } else
+    {
+        for (i = 0; i < list.length; i++) {
+            list[i].classList.remove('active');
+
+        }
+        this.classList.add('active');
+    }
+}
+for (i = 0; i < list.length; i++) {
+    list[i].addEventListener('click', accordion);
+}
+function send(num,msg) {
+    var user = ["bj.jpg"];
+    //num用于判断左右
+    var portrait_position = 0;
+    var style;
+    var send_txt = msg;
+    var tarId=sessionStorage.getItem('tarId');
+    var chat_ul = document.getElementById('chat_'+tarId);
+    var chat_span = chat_ul.getElementsByTagName('span');
+    var chat_img = chat_ul.getElementsByTagName('img');
+        if (send_txt == '') {
+            alert("请不要惜字如金");
+        } else {
+
+            if (num==0) {
+                style='<li><img src="images/six.jpg" style="margin-right: 10px;float: right"><span style="float: right">' + send_txt + '</span></li>';
+                document.getElementById('send_txt').value = '';
+            }
+             else if(num==1){
+                style= '<li><img src="images/six.jpg" style="margin-left: 10px;float: left"><span style="float: left">' + send_txt + '</span></li>';
+                send_txt='';
+            }
+            chat_ul.innerHTML +=style;
+            // 内容过多时,将滚动条放置到最底端
+            /*contentcontent.scrollTop = content.scrollHeight;*/
+        }
+
+}
+
+</script>
+
+  <div class="popup" id="popu">
+    <div class="popup-inner">
+      <div class="popup__photo">
+        <img src="images/photo-1515224526905-51c7d77c7bb8.jpg" alt="">
+      </div>
+      <div class="popup__text">
+        <h1>Lorem ipsum dolor sit amet</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p>
+
+          <div style="font-size:20px;color:black">
+              <h1 align="center">{{@text1}}</h1>
+              <table class="table">
+                  <tbody>
+                  <tr ms-for="el in @datalist">
+                      <td>Id</td>
+                      <td>{{el.userid}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Name</td>
+                      <td>{{el.username}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Sign</td>
+                      <td>{{el.usersign}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+          <input type="text" class="form-control" placeholder="输入验证消息" id="requestmessage">
+<<<<<<< HEAD
+                <button type="button" class="button" ms-click="@sendRequest">{{@apply}}</button>
+=======
+          <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
+                <button type="button" class="button" data-dismiss="modal">取消</button>
+                <button type="button" class="button">添加</button>
+>>>>>>> 7a345365e1be60d12f8de83b24cc8befbe7a71d1
+	  </div>
+      <a class="popup__close" href="#">X</a>
+    </div>
+</div>
+<div class="popup" id="popup">
+    <div class="popup-inner">
+        <div class="popup__photo">
+            <img src="images/six.jpg" alt="">
+        </div>
+        <div class="popup__text">
+            <div style="font-size:20px;color:black">
+                <h1 align="center">{{@text2}}</h1>
+                <table class="table">
+                    <tbody ms-for="el in @datalist">
+                    <tr >
+                        <td>Id</td>
+                        <td>{{el.friendid}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{el.friendName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Friendgroup</td>
+                        <td>{{el.friendGroup}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="button" >发送消息</button>
+            <button type="button" class="button" >查看好友信息</button>
+            <button type="button" class="button" ms-click="@deleteFriend">{{@text3}}</button>
+        </div>
+        <a class="popup__close" href="#">X</a>
+    </div>
+</div>
+ <div class="popup" id="popup2">
+    <div class="popup-inner">
+      <div class="popup__photo">
+        <img src="images/six.jpg" alt="">
+      </div>
+      <div class="popup__text">
+
+                <button type="button" class="button" >发送消息</button>
+				<button type="button" class="button" >查看好友信息</button>
+                <button type="button" class="button">删除好友</button>
+	  </div>
+      <a class="popup__close" href="#">X</a>
+    </div>
+</div>
+<div class="popup" id="popup1">
+    <div class="popup-inner">
+        <div class="popup__photo">
+            <img src="images/six.jpg" alt="">
+        </div>
+        <div class="popup__text">
+            <input type="text" placeholder="输入分组名"id="modalputin" class="form-control">
+           <a href="#" onclick="add()">确定</a>
+
+        </div>
+        <a class="popup__close" href="#">X</a>
+    </div>
+</div>
+
+<script>
+    var uid=JSON.stringify({
+        userId:sessionStorage.getItem('userId')
+    })
+    $.ajax({
+        type:'post',
+        url:'/getFriendList',
+        data:uid,
+        dataType:"json",
+        contentType:"application/json;charset=utf-8",
+        success:function (data) {
+            var list=data;
+            createList(list)
+        }
+    })
+</script>
+<script>
+    function add() {
+        var newli = document.createElement('li'); // 生成一个 li元素
+        // 设置元素的内容
+        var newul = document.createElement('ul');
+        var modalputin=document.getElementById('modalputin').value;
+        $(newli).addClass('list');
+        newli.id="li1"+modalputin;
+        newul.id="ul"+modalputin;
+        newli.innerHTML = '<a href="#" > '+modalputin+'</a>' ;
+        newli.setAttribute('class','list');
+        newli.appendChild(newul);
+        document.getElementById('friendList').appendChild(newli);
+        document.getElementById('modalputin').value=null;
+
+    }
+
+</script>
+</body>
+<script>
+    function heart() {
+        var json={conent:"",type:6,id:"",time:""};
+        websocket.send(JSON.stringify(json));
+    }
+</script>
+<script type="text/javascript">
+    var websocket = null;
+    var uid=sessionStorage.getItem("userId");
+    sessionStorage.setItem("userId",uid);
+    //判断当前浏览器是否支持WebSocket
+    if('WebSocket' in window){
+
+        websocket = new WebSocket("ws://localhost:8080/WebSocket/"+uid);
+
+    }
+    else{
+        alert('Not support websocket')
+    }
+
+
+    //连接发生错误的回调方法
+    websocket.onerror = function(){
+        setMessageInnerHTML("error");
+    };
+
+    //连接成功建立的回调方法
+    websocket.onopen = function(event){
+     //   setMessageInnerHTML("open");
+    }
+
+    //接收到消息的回调方法
+    websocket.onmessage = function(event){
+        var obj=JSON.parse(event.data);
+        var type=obj.type;
+        if(type=='1'){
+            var msg=obj.msg.infoContent;
+            send(1,msg);
+            //发送消息
+        }
+        else if(type=='2'){
+            //添加提示
+        }
+        else if(type=='3'){
+            var message=obj.get("message");
+        }
+      //  setMessageInnerHTML(obj.msg.id);
+     //   setMessageInnerHTML(obj.msg.infoContent);
+    }
+
+    //连接关闭的回调方法
+    websocket.onclose = function(){
+    //    setMessageInnerHTML("close");
+    }
+
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function(){
+        websocket.close();
+    }
+
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML){
+    //    document.getElementById('message').innerHTML += innerHTML + '<br/>';
+    }
+
+    //关闭连接
+    function closeWebSocket(){
+        websocket.close();
+    }
+
+    //发送消息
+    function sendMsg(message,type,tarId){
+        var json={id:tarId,content:message,time:new Date().toLocaleString(),type:type};
+      //  setMessageInnerHTML(message);
+        websocket.send(JSON.stringify(json));
+    }
+    setInterval("heart()","30000");
+</script>
+<script th:src="@{/js/avalon.js}"></script>
+<script th:src="@{/js/myscript.js}"></script>
+<script th:src="@{/js/UserRelation.js}"></script>
+<script th:src="@{js/jquery-2.1.1.min.js}"></script>
+</html>
