@@ -24,9 +24,17 @@ public class UserRelationController {
     private UserRelationService userRelationService;
     @RequestMapping(value="/searchFriend",method= RequestMethod.POST)
     @ResponseBody
-    List<User> searchFriend(@RequestBody JSONObject params){
+    List<Friend> searchfriend(@RequestBody JSONObject params){
+        String friendid=params.getString("friendid");
+        String userid=params.getString("userid");
+        List<Friend> friend=userRelationService.searchFriend(userid,friendid);
+        return friend;
+    }
+    @RequestMapping(value="/searchUser",method= RequestMethod.POST)
+    @ResponseBody
+    List<User> searchUser(@RequestBody JSONObject params){
         String searchid=params.getString("friendid");
-        List<User> user=userRelationService.searchFriend(searchid);
+        List<User> user=userRelationService.searchUser(searchid);
         for(User str :user){
             System.out.println(str.getAddress());
             System.out.println(str.getBirth());
@@ -43,15 +51,16 @@ public class UserRelationController {
         String userIdB=params.getString("friendid");
         String message=params.getString("msg");
         System.out.println(userIdA+"   "+userIdB+"   "+message);
-        userRelation.setTarid(userIdA);
-        userRelation.setReqid(userIdB);
+        userRelation.setTarid(userIdB);
+        userRelation.setReqid(userIdA);
         userRelation.setMsg(message);
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         userRelation.setRtime(timestamp);
         userRelation.setReqstatus("0");
-        String userid=userIdA;
-        UserRelation userRelation1=userRelationService.judgeRelation(userid);
+        User user=userRelationService.getUserid(userIdA);
+        userRelation.setReqname(user.getUsername());
+        UserRelation userRelation1=userRelationService.judgeRelation(userIdA);
         Map<String,Object> result = new HashMap<String,Object>();
         if(userRelation1!=null)
             result.put("result","申请失败,该用户已是您的好友！");
@@ -64,18 +73,11 @@ public class UserRelationController {
     }
     @RequestMapping(value="/getRequest",method= RequestMethod.POST)
     @ResponseBody
-    Map<String,Object> getRequest(@RequestBody JSONObject params){
+    List<UserRelation> getRequest(@RequestBody JSONObject params){
         String userIdA=params.getString("userid");
         String userIdB=params.getString("friendid");
-        UserRelation userRelation=userRelationService.getRequest(userIdA,userIdB);
-        Map<String,Object> result = new HashMap<String,Object>();
-        result.put("tarid",userRelation.getTarid());
-        result.put("reqid",userRelation.getReqid());
-        result.put("rtime",userRelation.getRtime());
-        result.put("msg",userRelation.getMsg());
-        result.put("reqgroup",userRelation.getReqgroup());
-        result.put("reqstatus",userRelation.getReqstatus());
-        return result;
+        List<UserRelation> userRelation=userRelationService.getRequest(userIdB,userIdA);
+        return userRelation;
     }
     @RequestMapping(value="/agreeRequest",method= RequestMethod.POST)
     @ResponseBody
@@ -95,19 +97,33 @@ public class UserRelationController {
     Map<String,Object> addFriend(@RequestBody JSONObject params){
         String friendid=params.getString("friendid");
         String friendgroup=params.getString("friendgroup");
-        String friendName=params.getString("friendName");
         String userid=params.getString("userid");
+        userRelationService.agreeRequest(friendid,userid);
+        User user=userRelationService.getUserid(friendid);
         Friend friend=new Friend();
         friend.setFriendid(friendid);
         friend.setFriendGroup(friendgroup);
-        friend.setFriendName(friendName);
+        friend.setFriendName(user.getUsername());
         int temp;
         Map<String,Object> result = new HashMap<String,Object>();
         temp=userRelationService.addFriend(userid,friend);
         if(temp!=0){
-            result.put("result","success");}
+            result.put("result","添加好友成功！");}
         else
-            result.put("result","fail");
+            result.put("result","添加好友失败！");
+        return result;
+    }
+    @RequestMapping(value="/deleteFriend",method= RequestMethod.POST)
+    @ResponseBody
+    Map<String,Object> deleteFriend(@RequestBody JSONObject params){
+        String userid=params.getString("userid");
+        String friendid=params.getString("friendid");
+        int temp=userRelationService.deleteFriend(userid,friendid);
+        Map<String,Object> result = new HashMap<String,Object>();
+        if(temp!=0){
+            result.put("result","删除成功");}
+        else
+            result.put("result","删除失败");
         return result;
     }
     @RequestMapping(value="/refuseRequest",method= RequestMethod.POST)
@@ -115,12 +131,12 @@ public class UserRelationController {
     Map<String,Object> refuseRequest(@RequestBody JSONObject params){
         String userid=params.getString("userid");
         String friendid=params.getString("friendid");
-        int temp=userRelationService.refuseRequest(userid,friendid);
+        int temp=userRelationService.refuseRequest(friendid,userid);
         Map<String,Object> result = new HashMap<String,Object>();
         if(temp!=0){
-            result.put("result","success");}
+            result.put("result","拒绝成功");}
         else
-            result.put("result","fail");
+            result.put("result","拒绝失败");
         return result;
     }
     @RequestMapping(value="/checkRequest",method= RequestMethod.POST)

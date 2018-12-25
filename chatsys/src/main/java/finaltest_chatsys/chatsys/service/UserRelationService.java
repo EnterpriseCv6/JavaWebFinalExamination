@@ -13,8 +13,14 @@ import java.util.List;
 public class UserRelationService {
     @Resource
     private UserRelationMapper userRelationMapper;
-    public List<User> searchFriend(String friendid){
-        return userRelationMapper.searchfriend(friendid);
+    public List<Friend> searchFriend(String userid,String friendid){
+        return userRelationMapper.searchFriend(userid,friendid);
+    }
+    public List<User> searchUser(String friendid){
+        return userRelationMapper.searchUser(friendid);
+    }
+    public User getUserid(String userid){
+        return userRelationMapper.getusername(userid);
     }
     public  void insertToUnprocessed(UserRelation userRelation){
         userRelationMapper.insertToUnprocessed(userRelation);
@@ -22,7 +28,7 @@ public class UserRelationService {
     public UserRelation judgeRelation(String userId){
         return userRelationMapper.judgeRelation(userId);
     }
-    public UserRelation getRequest(String traid,String reqid){
+    public List<UserRelation> getRequest(String traid,String reqid){
         return userRelationMapper.getRequest(traid,reqid);
     }
     public List<UserRelation> getFriendgroup(String userid, String friendid){
@@ -33,6 +39,9 @@ public class UserRelationService {
     }
     public int addFriend(String userid, Friend friend){
         return userRelationMapper.addFriend(userid,friend);
+    }
+    public int deleteFriend(String userid, String friendid){
+        return userRelationMapper.deleteFriend(userid,friendid);
     }
     public int agreeRequest(String tarid,String reqid){
         return userRelationMapper.agreeRequest(tarid,reqid);

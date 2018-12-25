@@ -27,11 +27,10 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
       <!--搜索-->
        <div class="search_online">
            <input type="text" placeholder="搜索/添加" id="putin" style="width:90px">
-           <a  href="#popup"><img src="images/find.png" class="img-circle" height="20px" width="20px"></a>
-           <a  href="#popu"><img src="images/plus.png"   class="img-circle" height="20px" width="20px"></a>
-           <a  href="#popup1"><img src="images/加组.png" class="img-circle" height="20px" width="20px"></a>
-           <button  type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
-               <img src="images/加组.png" class="img-circle" height="15px" width="15px"></button>
+           <a  href="#popup" ms-click="@searchFriend"><img src="images/find.png" class="img-circle" height="20px" width="20px"></a>
+           <a  href="#popu" ms-click="@searchUser"><img src="images/plus.png"   class="img-circle" height="20px" width="20px"></a>
+           <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ms-click="@getRequest"><img src="images/加组.png" class="img-circle" height="15px" width="15px"></button>
+
 
            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                <div class="modal-dialog">
@@ -39,26 +38,27 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
                        <div class="modal-body">
                            <div class="modal-footer">
                                <div style="font-size:20px;color:black">
-                                   <table class="table">
+                                   <table class="table" ms-for="el in @datalist1">
                                        <tbody>
                                        <tr>
                                            <td>Id</td>
                                            <td>Name</td>
                                            <td>好友请求</td>
-                                           <td></td>
+                                           <td>好友分组</td>
                                            <td></td>
                                        </tr>
                                        <tr>
-                                           <td>Mumbai</td>
-                                           <td>Bangalore</td>
-                                           <td><textarea type="textarea"cols=4 rows=3 ></textarea></td>
-                                           <td><select>
+                                           <td>{{el.reqid}}</td>
+                                           <td>{{el.reqname}}</td>
+                                           <td>{{el.msg}}</td>
+                                           <td><select id="friendgroup">
                                                <option>好友</option>
                                                <option>过客</option>
                                                <option>家人</option>
                                                <option>朋友</option>
                                            </select></td>
-                                           <td><button type="button" class="btn btn-default" data-dismiss="modal" onclick="">拒绝</button></td>
+                                           <td><button type="button" class="btn btn-default" data-dismiss="modal" ms-click="@addFriend">同意</button></td>
+                                           <td><button type="button" class="btn btn-default" data-dismiss="modal" ms-click="@refuseRequest">拒绝</button></td>
                                        </tr>
 
                                        </tbody>
@@ -216,6 +216,7 @@ function send() {
       <div class="popup__text">
 
           <div style="font-size:20px;color:black">
+              <h1 align="center">{{@text1}}</h1>
               <table class="table">
                   <tbody>
                   <tr ms-for="el in @datalist">
@@ -234,12 +235,44 @@ function send() {
               </table>
           </div>
           <input type="text" class="form-control" placeholder="输入验证消息" id="requestmessage">
-                <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
+                <button type="button" class="button" ms-click="@sendRequest">{{@apply}}</button>
 	  </div>
       <a class="popup__close" href="#">X</a>
     </div>
 </div>
- <div class="popup" id="popup">
+<div class="popup" id="popup">
+    <div class="popup-inner">
+        <div class="popup__photo">
+            <img src="images/six.jpg" alt="">
+        </div>
+        <div class="popup__text">
+            <div style="font-size:20px;color:black">
+                <h1 align="center">{{@text2}}</h1>
+                <table class="table">
+                    <tbody ms-for="el in @datalist">
+                    <tr >
+                        <td>Id</td>
+                        <td>{{el.friendid}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{el.friendName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Friendgroup</td>
+                        <td>{{el.friendGroup}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="button" >发送消息</button>
+            <button type="button" class="button" >查看好友信息</button>
+            <button type="button" class="button" ms-click="@deleteFriend">{{@text3}}</button>
+        </div>
+        <a class="popup__close" href="#">X</a>
+    </div>
+</div>
+ <div class="popup" id="popup2">
     <div class="popup-inner">
       <div class="popup__photo">
         <img src="images/six.jpg" alt="">
