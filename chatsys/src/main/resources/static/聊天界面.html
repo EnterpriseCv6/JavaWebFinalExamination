@@ -136,9 +136,6 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
 <script>
 
 window.onload=function(){
-    sessionStorage.setItem('userId','javaweb');
-
-
 var lis=document.getElementsByTagName("li");
 for(i=0;i<lis.length;i++){
 if(lis[i].className!="list")
@@ -211,6 +208,26 @@ function send(num,msg) {
         <h1>Lorem ipsum dolor sit amet</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p>
 
+          <div style="font-size:20px;color:black">
+              <table class="table">
+                  <tbody>
+                  <tr ms-for="el in @datalist">
+                      <td>Id</td>
+                      <td>{{el.userid}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Name</td>
+                      <td>{{el.username}}</td>
+                  </tr>
+                  <tr ms-for="el in @datalist">
+                      <td>Sign</td>
+                      <td>{{el.usersign}}</td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
+          <input type="text" class="form-control" placeholder="输入验证消息" id="requestmessage">
+          <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
                 <button type="button" class="button" data-dismiss="modal">取消</button>
                 <button type="button" class="button">添加</button>
 	  </div>
@@ -247,7 +264,7 @@ function send(num,msg) {
 
 <script>
     var uid=JSON.stringify({
-        userId:'javaweb'
+        userId:sessionStorage.getItem('userId')
     })
     $.ajax({
         type:'post',

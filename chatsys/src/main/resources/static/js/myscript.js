@@ -226,6 +226,40 @@ function sign() {
     }
     else
     {
+        sessionStorage.setItem('userId',id);
         return true;
+    }
+}
+function login() {
+    var id=document.getElementById('loginId').value;
+    var pwd=document.getElementById('loginPwd').value;
+    if(id.length==0||pwd.length==0){
+        alert('账号或密码不能为空');
+    }
+    else if(id.length>15||pwd.length>15){
+        alert('账号或密码的长度不能超过15位');
+    }
+    else{
+        var data=JSON.stringify({
+            userId:id,
+            upassword:pwd
+        })
+        $.ajax({
+            type:'POST',
+            url:'/loginTest/',
+            data:data,
+            dataType:"json",
+            contentType: "application/json;charset=utf-8",
+            success:function (res) {
+                var result=res.result;
+                if(result=='true'){
+                    sessionStorage.setItem('userId',id);
+                    window.location.href=encodeURI('/test');
+
+                }else{
+                    alert('登陆失败!');
+                }
+            }
+        })
     }
 }

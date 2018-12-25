@@ -38,7 +38,7 @@ public class UserController
             long time = System.currentTimeMillis();
             Date date = new Date(time);
             service.addUser(userid, upassword, username, usersign, date, birth, address, 1);
-            return "聊天界面";
+            return "redirect:/test";
         }
         catch (Exception e)
         {
