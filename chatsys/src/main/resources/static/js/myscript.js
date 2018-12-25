@@ -75,7 +75,6 @@ function createList(list) {
             a.innerHTML=list.msg[i].friendName;
             //生成该好友列并加入对应无序列表
             li1.setAttribute('id','li2'+list.msg[i].friendName);
-            li1.setAttribute('class','list');
             li1.appendChild(a);
             var u=document.getElementById('ul'+list.msg[i].friendGroup);
             u.appendChild(li1);
@@ -85,7 +84,6 @@ function createList(list) {
 //判断当前已有分组中是否存在该分组名
 function isExist(group,name,m) {
     var i=-1;
-
     if(m==0)
         i=-1;
     else {
@@ -95,7 +93,6 @@ function isExist(group,name,m) {
             }
         }
     }
-    alert(i);
     return i;
 }
 //发送当前聊天对象的id到后端
@@ -124,74 +121,33 @@ $(function () {
 $(function () {
     $(".menu").on('click','.func',{foo:"文本:"},function () {
         var name=$(this).html();
+        var flag=0;
+        var tarId=sessionStorage.getItem('tarId');
         var id=sessionStorage.getItem(name);
-        sendMsg("",'5',id);
+        if(id==sessionStorage.getItem('tarId')){
+            flag=1;
+        }
+        if(flag==0) {
+            sessionStorage.setItem('tarId', id);
+            $('#download_a').attr('href', window.location.host + '/download?userId=' + sessionStorage.getItem('userId') + "&tarId=" + id);
+            $('#download_a').attr('target', '_blank');
+            if($('#chat_'+tarId).length>0)
+                $('#chat_'+tarId).toggle();
+            if($('#chat_'+id).length>0){
+                $('#chat_'+id).toggle();
+            }else{
+                var u=document.createElement('ul');
+                u.setAttribute('id','chat_'+id);
+                u.setAttribute('class','chat_content');
+                document.getElementById('chat-div').appendChild(u);
+            }
+            sendMsg("",'5',id);
+        }
     })
 
 })
-
-// 注册表单
-function sign() {
-    var id = document.getElementById("signId").value;      // 获取表单账号
-    var name = document.getElementById("signName").value;  // 获取表单用户名
-    var pw1 = document.getElementById("signPW1").value;    // 获取表单密码
-    var pw2 = document.getElementById("signPW2").value;    // 获取表单确认密码
-    var birth = document.getElementById("signBirth").value;// 获取表单生日
-
-    var idf = 0;     // 记录账号是否有非字母和数字
-    for (var i = 0; i <= id.length; i++)
-    {
-        if ((id.charAt(i) >= 'a' && id.charAt(i) <= 'z')
-            || (id.charAt(i) >= 'A' && id.charAt(i) <= 'Z')
-            || (id.charAt(i) >= '0' && id.charAt(i) <= '9'))
-        {
-            idf = 1;   // 账号合法
-            break;
-        }
-
-    }
-    var birth = new Date(birth);
-
-    var birthf = 1;   // 记录生日格式是否正确
-    if (id.length > 15)
-    {
-        alert("账号不得超过15个字符"); return false;
-    }
-
-    else if (id.length == 0)
-    {
-        alert("账号不得为空！"); return false;
-    }
-    else if (idf == 0)
-    {
-        alert("账号只允许输入字母和数字！"); return false;
-    }
-    else if (name.length >= 10)
-    {
-        alert("用户名不得超过10个字符！"); return false;
-    }
-    else if (pw1.length < 6)
-    {
-        alert("密码不得小于6个字符！"); return false;
-    }
-    else if (pw1.length >= 20)
-    {
-        alert("密码不得大于20个字符！"); return false;
-    }
-    else if (pw1 != pw2)
-    {
-        alert("两次输入的密码不相等！"); return false;
-    }
-    else if (birth == "Invalid Date")
-    {
-        alert("请正确输入出生日期（XXXX-XX-XX）"); return false;
-    }
-    else
-    {
-        return true;
-    }
+function sendT() {
+    var msg=document.getElementById("send_txt").value;
+    send(0,msg);
+    sendMsg(msg,'1',sessionStorage.getItem('tarId'));
 }
-
-
-
-

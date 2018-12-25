@@ -114,6 +114,7 @@ public class WebSocketEndPoint {
             //将对象的id加入图中
             userIdMap.put(userId,info.getId());
         }
+
     }
     @OnError
     public void onError(Session session, Throwable error) {

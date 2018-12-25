@@ -26,13 +26,14 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
       <div class="chat_online" style="background-color:#324252">
       <!--搜索-->
        <div class="search_online">
-       <input type="text" placeholder="搜索/添加" id="putin">
-	  <a  href="#popup" ms-click="@request"><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
-  <a  href="#popu" ms-click="@request"><img src="images/plus.png"   class="img-circle" height="24px" width="24px"></a>
 
-	
+       <input type="text" placeholder="搜索/添加" id="putin">
+	  <a  href="#popup"><img src="images/find.png" class="img-circle" height="24px" width="24px"></a>
+  <a  href="#popu"><img src="images/plus.png"   class="img-circle" height="24px" width="24px"></a>
+
+
 </div>
-	  
+
 	   <ul class="menu" id="friendList">
   <!-- <li class="list"><a href="#">好友</a>
       <ul class="items">
@@ -41,21 +42,21 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
          <li><a href="#"> 于好</a></li>
       </ul>
    </li>
-   <li class="list"><a href="#">过客</a> 
+   <li class="list"><a href="#">过客</a>
       <ul class="items">
          <li> <a href=javsscript:void(0) > 李过 </a></li>
          <li> <a href="#" > 李过 </a></li>
          <li> <a href="#" > 李过  </a></li>
       </ul>
    </li>`
-   <li class="list"><a href="#">家人</a> 
+   <li class="list"><a href="#">家人</a>
       <ul class="items">
          <li> <a href="#" > 李家 </a></li>
          <li> <a href="#" > 李家 </a></li>
          <li> <a href="#" > 李家</a></li>
       </ul>
    </li>
-   <li class="list"><a href="#">朋友</a> 
+   <li class="list"><a href="#">朋友</a>
       <ul class="items">
          <li> <a href="#" > 李朋</a></li>
          <li> <a href="#" >李朋 </a></li>
@@ -66,36 +67,35 @@ border:1px solid #ddd;background-color:#eee;width:206px;height:599px;background-
       </div>
         <!--聊天界面-->
         <div class="chat_main">
-         <div class="chat_div">
-          <ul id="chat_ul" class="chat_content">
-          </ul>
+         <div class="chat_div" id="chat-div">
+
          </div>
          <div class="send_message">
-          <form>
+
            <input type="text" placeholder="请输入消息" id="send_txt" style="width:410px">
-           <input type="button" value="发送" id="send_btn" onclick="send()">
+           <input type="button" value="发送" id="send_btn" onclick="sendT()">
 		<button class="btn btn-default btn-xs"><img src="images/find.png"
 		class="img-rounded" height="20px" width="20px">历史搜索</button>
-          </form>
+
          </div>
        </div>
         <!--名片-->
       <div class="chat_card">
-	<p class="pull-right">  
+	<p class="pull-right">
 	<form class="form-inline" role="form">
   <div class="form-group">
     <label class="sr-only" for="name">搜索</label>
     <input type="text" class="form-control" id="name" placeholder="请输入名称" style="width:140px">
   </div>
- 
-  <button class="form-control"><img src="images/xiazai.png" class="img-rounded" height="20px" width="20px">下载</button>
+
+          <button class="form-control"><a href="#" target="_blank" id="download_a"><img src="images/xiazai.png" class="img-rounded" height="20px" width="20px">下载</a></button>
 </form>
      </p>
         </div>
     </div>
     </div>
   </div>
-  
+
 <script>
 
 window.onload=function(){
@@ -134,36 +134,33 @@ function accordion(e) {
 for (i = 0; i < list.length; i++) {
     list[i].addEventListener('click', accordion);
 }
-function send() {
+function send(num,msg) {
     var user = ["bj.jpg"];
-    var num = 1;//判断左右
+    //num用于判断左右
     var portrait_position = 0;
-    var now = -1;//左右浮动
-    var send_txt = document.getElementById('send_txt');
-    var chat_ul = document.getElementById('chat_ul');
+    var style;
+    var send_txt = msg;
+    var tarId=sessionStorage.getItem('tarId');
+    var chat_ul = document.getElementById('chat_'+tarId);
     var chat_span = chat_ul.getElementsByTagName('span');
     var chat_img = chat_ul.getElementsByTagName('img');
-   send_btn.onclick = function () {
-        if (send_txt.value == '') {
+        if (send_txt == '') {
             alert("请不要惜字如金");
         } else {
-            chat_ul.innerHTML += '<li><img src="six.jpg"><span>' + send_txt.value + '</span></li>';
-            now++;
+
             if (num==0) {
-                chat_span[now].className = 'spanleft';
-                chat_img[now].className = 'imgleft';
+                style='<li><img src="images/six.jpg" style="margin-right: 10px;float: right"><span style="float: right">' + send_txt + '</span></li>';
+                document.getElementById('send_txt').value = '';
             }
-             else {
-			 
-				chat_span[now].className = 'spanright';
-				 chat_img[now].className = 'imgright';
-               
+             else if(num==1){
+                style= '<li><img src="images/six.jpg" style="margin-left: 10px;float: left"><span style="float: left">' + send_txt + '</span></li>';
+                send_txt='';
             }
-            send_txt.value = '';
+            chat_ul.innerHTML +=style;
             // 内容过多时,将滚动条放置到最底端
             /*contentcontent.scrollTop = content.scrollHeight;*/
         }
-		}
+
 }
 
 </script>
@@ -174,27 +171,11 @@ function send() {
         <img src="images/photo-1515224526905-51c7d77c7bb8.jpg" alt="">
       </div>
       <div class="popup__text">
+        <h1>Lorem ipsum dolor sit amet</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p>
 
-          <div style="font-size:20px;color:black">
-              <table class="table">
-                  <tbody>
-                  <tr ms-for="el in @datalist">
-                      <td>Id</td>
-                      <td>{{el.userid}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Name</td>
-                      <td>{{el.username}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Sign</td>
-                      <td>{{el.usersign}}</td>
-                  </tr>
-                  </tbody>
-              </table>
-          </div>
-          <input type="text" class="form-control" placeholder="输入验证消息" id="requestmessage">
-                <button type="button" class="button" ms-click="@sendRequest">{{@text}}</button>
+                <button type="button" class="button" data-dismiss="modal">取消</button>
+                <button type="button" class="button">添加</button>
 	  </div>
       <a class="popup__close" href="#">X</a>
     </div>
@@ -205,32 +186,7 @@ function send() {
         <img src="images/six.jpg" alt="">
       </div>
       <div class="popup__text">
-          <div style="font-size:20px;color:black">
-              <table class="table">
-                  <tbody>
-                  <tr ms-for="el in @datalist">
-                      <td>Id</td>
-                      <td>{{el.userid}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Name</td>
-                      <td>{{el.username}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Birth</td>
-                      <td>{{el.birth}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Sign</td>
-                      <td>{{el.usersign}}</td>
-                  </tr>
-                  <tr ms-for="el in @datalist">
-                      <td>Address</td>
-                      <td>{{el.address}}</td>
-                  </tr>
-                  </tbody>
-              </table>
-          </div>
+
                 <button type="button" class="button" >发送消息</button>
 				<button type="button" class="button" >查看好友信息</button>
                 <button type="button" class="button">删除好友</button>
@@ -289,8 +245,15 @@ function send() {
     //接收到消息的回调方法
     websocket.onmessage = function(event){
         var obj=JSON.parse(event.data);
-        var message=obj.get("message");
-        var type=obj.get("type");
+        var type=obj.type;
+        if(type=='1'){
+            var msg=obj.msg.infoContent;
+            send(1,msg);
+            //发送消息
+        }
+        else if(type=='2'){
+            //添加提示
+        }
       //  setMessageInnerHTML(obj.msg.id);
      //   setMessageInnerHTML(obj.msg.infoContent);
     }
@@ -325,6 +288,4 @@ function send() {
 </script>
 <script th:src="@{/js/avalon.js}"></script>
 <script th:src="@{/js/myscript.js}"></script>
-<script th:src="@{/js/UserRelation.js}"></script>
-<script th:src="@{js/jquery-2.1.1.min.js}"></script>
 </html>
