@@ -48,8 +48,6 @@ public class UserController
             long time = System.currentTimeMillis();
             Date date = new Date(time);
             service.addUser(userid, upassword, username, usersign, date, birth, address, 1);
-
-            return "redirect:/test";
             // 修改userstatus
             service.login(userid);
             return "聊天界面";
@@ -66,12 +64,11 @@ public class UserController
     @PostMapping(value = "login")
     public @ResponseBody List<List> login(String userid)
     {
+        // 获取为处理信息
+        List<UnprocessedMessage> UnpMsg = service.findUnpMesssage(userid);
 
         // 修改userstatus
         service.login(userid);
-
-        // 获取为处理信息
-        List<UnprocessedMessage> UnpMsg = service.findUnpMesssage(userid);
 
         // 获取未处理请求
         List<UnprocessedRequest> UnpReq = service.countUnpRequest(userid);
@@ -104,9 +101,35 @@ public class UserController
 
     // 获取个人信息
     @PostMapping(value = "queryUserInformation")
-    public User queryUserInformation(String userid)
+    public String queryUserInformation(@RequestParam("loginAccount") String userid, @RequestParam("loginPw") String loginPw)
     {
-        return service.queryUserInformation(userid);
+        User myself = service.queryUserInformation(userid);
+        request.removeAttribute("loginError");
+        String correctPassword;
+
+        // 如果账号不存在
+        if (myself == null)
+        {
+            request.setAttribute("loginError", "账号不存在！");
+            return "登陆";
+        }
+        else
+        {
+            // 从数据库中获取正确密码
+            correctPassword = myself.getUpassword();
+        }
+
+        // 如果密码正确
+        if (loginPw.equals(correctPassword))
+        {
+
+        }
+        // 密码错误
+        {
+            request.removeAttribute("loginError");
+            request.setAttribute("loginError", "密码错误！");
+            return "登陆";
+        }
     }
 
     // 更新个人信息
