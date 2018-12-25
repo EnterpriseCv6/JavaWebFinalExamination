@@ -80,6 +80,11 @@ function createList(list) {
             u.appendChild(li1);
 
     }
+    var s=JSON.stringify({
+        msg:group
+    })
+    sessionStorage.setItem('group',s);
+    sessionStorage.setItem('groupLength',j.toString());
 }
 //判断当前已有分组中是否存在该分组名
 function isExist(group,name,m) {
@@ -150,4 +155,77 @@ function sendT() {
     var msg=document.getElementById("send_txt").value;
     send(0,msg);
     sendMsg(msg,'1',sessionStorage.getItem('tarId'));
+}
+
+$(function () {
+    var obj=sessionStorage.getItem('group');
+    var group=JSON.parse(obj).msg;
+    var n=sessionStorage.getItem('groupLength');
+    var s=document.getElementById('selectBox');
+    for(var i=0;i<n;i++){
+        var o=document.createElement('option');
+        o.innerHTML=group[i];
+        o.value=group[i];
+        s.appendChild(o);
+    }
+})
+function sign() {
+    var id = document.getElementById("signId").value;      // 获取表单账号
+    var name = document.getElementById("signName").value;  // 获取表单用户名
+    var pw1 = document.getElementById("signPW1").value;    // 获取表单密码
+    var pw2 = document.getElementById("signPW2").value;    // 获取表单确认密码
+    var birth = document.getElementById("signBirth").value;// 获取表单生日
+
+    var idf = 0;     // 记录账号是否有非字母和数字
+    for (var i = 0; i <= id.length; i++)
+    {
+        if ((id.charAt(i) >= 'a' && id.charAt(i) <= 'z')
+            || (id.charAt(i) >= 'A' && id.charAt(i) <= 'Z')
+            || (id.charAt(i) >= '0' && id.charAt(i) <= '9'))
+        {
+            idf = 1;   // 账号合法
+            break;
+        }
+
+    }
+    var birth = new Date(birth);
+
+    var birthf = 1;   // 记录生日格式是否正确
+    if (id.length > 15)
+    {
+        alert("账号不得超过15个字符"); return false;
+    }
+
+    else if (id.length == 0)
+    {
+        alert("账号不得为空！"); return false;
+    }
+    else if (idf == 0)
+    {
+        alert("账号只允许输入字母和数字！"); return false;
+    }
+    else if (name.length >= 10)
+    {
+        alert("用户名不得超过10个字符！"); return false;
+    }
+    else if (pw1.length < 6)
+    {
+        alert("密码不得小于6个字符！"); return false;
+    }
+    else if (pw1.length >= 20)
+    {
+        alert("密码不得大于20个字符！"); return false;
+    }
+    else if (pw1 != pw2)
+    {
+        alert("两次输入的密码不相等！"); return false;
+    }
+    else if (birth == "Invalid Date")
+    {
+        alert("请正确输入出生日期（XXXX-XX-XX）"); return false;
+    }
+    else
+    {
+        return true;
+    }
 }
